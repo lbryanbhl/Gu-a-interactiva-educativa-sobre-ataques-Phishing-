@@ -1,0 +1,5019 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía Interactiva Integral de Phishing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --blue1:#4facfe;
+  --blue2:#00f2fe;
+  --dark1:#0b1d3a;
+  --dark2:#0f3c6e;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,var(--dark1),var(--dark2));
+  color:#fff;
+  display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;
+  background:rgba(0,0,0,0.35);
+  backdrop-filter:blur(10px);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.sidebar h2{margin:0 0 10px 0}
+.menu-btn{
+  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  border:none;
+  border-radius:12px;
+  padding:12px;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+.menu-btn.locked{opacity:.4;cursor:not-allowed}
+.menu-btn.active{outline:3px solid #fff}
+
+/* MAIN */
+.main{
+  flex:1;
+  padding:30px;
+  overflow-y:auto;
+}
+.slide{
+  display:none;
+  background:rgba(255,255,255,0.12);
+  border-radius:18px;
+  padding:30px;
+  box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+.slide.active{display:block}
+
+.btn{
+  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  border:none;
+  border-radius:12px;
+  padding:12px 20px;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn.secondary{
+  background:linear-gradient(135deg,#1e3c72,#2a5298);
+}
+
+.quiz-option{
+  background:rgba(255,255,255,.18);
+  padding:14px;
+  border-radius:12px;
+  margin:10px 0;
+  cursor:pointer;
+}
+
+.correct{border:2px solid #2ecc71}
+.incorrect{border:2px solid #e74c3c}
+
+.explanation{
+  margin-top:10px;
+  padding:12px;
+  background:rgba(0,0,0,.35);
+  border-radius:10px;
+}
+
+.progress{
+  height:8px;
+  background:rgba(255,255,255,.2);
+  border-radius:8px;
+  margin-top:20px
+}
+.progress-bar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#4facfe,#00f2fe);
+  border-radius:8px
+}
+.metrics{display:flex;gap:20px;margin-bottom:20px}
+/* === CONCEPTOS COMO TARJETAS === */
+.concepts-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+  margin-top:20px;
+}
+
+.concept-card{
+  background:rgba(255,255,255,0.12);
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.concept-card h3{
+  margin-top:0;
+  margin-bottom:8px;
+  font-size:1.05rem;
+  color:#ffffff;
+}
+
+.concept-card p{
+  margin:0;
+  font-size:.95rem;
+  line-height:1.5;
+  opacity:.95;
+}
+/* === MAPA CONCEPTUAL CIRCULAR (AISLADO) === */
+.concept-circle-map{
+  position:relative;
+  width:700px;
+  height:700px;
+  margin:80px auto;
+}
+
+.concept-circle-map .concept-center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  padding:28px 42px;
+  border-radius:50%;
+  font-weight:700;
+  font-size:1.15rem;
+  text-align:center;
+  box-shadow:0 15px 35px rgba(0,0,0,.45);
+}
+
+.concept-circle-map .concept-node{
+  position:absolute;
+  width:200px;
+  padding:18px;
+  background:rgba(255,255,255,0.18);
+  border-radius:20px;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  transition:.3s;
+}
+
+.concept-circle-map .concept-node h4{
+  margin:0 0 6px 0;
+  font-size:1rem;
+}
+
+.concept-circle-map .concept-node p{
+  margin:0;
+  font-size:.85rem;
+  opacity:.9;
+  line-height:1.35;
+}
+
+.concept-circle-map .concept-node:hover{
+  transform:scale(1.08);
+  background:rgba(255,255,255,0.28);
+}
+
+
+.image-row{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.image-row img{
+  width: 35%;
+  border-radius: 12px;
+}
+
+
+/* === TARJETAS DE TIPOS DE PHISHING === */
+.phishing-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  margin-top:25px;
+}
+
+.phishing-card{
+  background:rgba(255,255,255,0.14);
+  border-radius:16px;
+  padding:20px;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+.phishing-card:hover{
+  transform:scale(1.05);
+  background:rgba(255,255,255,0.25);
+}
+
+.phishing-card h3{
+  margin:10px 0;
+}
+
+.phishing-card p{
+  font-size:.95rem;
+  opacity:.9;
+}
+
+/* === AVANZADOS === */
+.phishing-card.advanced{
+  background:linear-gradient(135deg,#ff6a00,#ee0979);
+}
+
+.advanced-badge{
+  display:inline-block;
+  background:rgba(0,0,0,.35);
+  padding:4px 10px;
+  border-radius:12px;
+  font-size:.75rem;
+  margin-bottom:8px;
+}
+
+
+.phishing-card p{
+  font-size:.9rem;
+  line-height:1.4;
+}
+
+.phishing-card .desc{
+  margin-top:8px;
+  opacity:.9;
+}
+
+.phishing-card .impact{
+  margin-top:10px;
+  font-size:.8rem;
+  opacity:.8;
+}
+/* === CONCEPTOS (VISTA EXPLICATIVA, COMO ANTES) === */
+.concept-map{
+  margin-top:25px;
+}
+
+.concept-row{
+  display:flex;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.concept-row .concept-card{
+  flex:1;
+  background:rgba(255,255,255,0.12);
+  border-radius:16px;
+  padding:18px 22px;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+}
+
+/* tarjeta central */
+.concept-card.center{
+  max-width:100%;
+}
+
+.concept-row .concept-card h3{
+  margin:0 0 6px 0;
+  font-size:1.05rem;
+}
+
+.concept-row .concept-card p{
+  margin:0;
+  font-size:.95rem;
+  line-height:1.45;
+  opacity:.95;
+}
+.unlock-box{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+display:flex;
+align-items:center;
+justify-content:center;
+opacity:0;
+pointer-events:none;
+transition:opacity .5s;
+z-index:1000;
+}
+
+.unlock-box.show{
+opacity:1;
+pointer-events:auto;
+}
+
+.unlock-content{
+background:#1c3558;
+padding:40px;
+border-radius:16px;
+text-align:center;
+max-width:450px;
+animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+from{
+transform:translateY(30px);
+opacity:0;
+}
+to{
+transform:translateY(0);
+opacity:1;
+}
+}
+.risk-bar{
+height:10px;
+background:rgba(255,255,255,.2);
+border-radius:10px;
+margin:15px 0;
+overflow:hidden;
+}
+
+.email-part.detected,
+.email-link.detected{
+background:rgba(255,80,80,.3);
+border-bottom:2px solid #ff4d4d;
+}
+.risk-bar{
+height:10px;
+background:rgba(255,255,255,.2);
+border-radius:10px;
+margin:20px 0;
+overflow:hidden;
+}
+
+#riskFill{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ffcc00,#ff3300);
+transition:.5s;
+}
+.unlock-box{
+display:none;
+}
+.email-box{
+background:rgba(255,255,255,.1);
+padding:20px;
+border-radius:12px;
+margin:20px 0;
+}
+
+.analysis-list{
+display:grid;
+gap:12px;
+margin-top:20px;
+}
+
+.analysis-item{
+background:rgba(255,255,255,.15);
+padding:14px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.analysis-item.selected{
+border:2px solid #4facfe;
+background:rgba(79,172,254,.2);
+}
+.menu-btn.locked{
+opacity:.4;
+cursor:not-allowed;
+pointer-events:none;
+}
+.analysis-panel{
+background:rgba(255,255,255,.1);
+padding:12px;
+border-radius:8px;
+margin-bottom:20px;
+}
+
+.feedback-box{
+background:rgba(0,0,0,.2);
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.phish-element{
+cursor:pointer;
+padding:3px 5px;
+border-radius:4px;
+transition:.2s;
+}
+
+.phish-element:hover{
+background:rgba(255,0,0,.2);
+}
+
+.phish-element.selected{
+background:rgba(255,0,0,.35);
+border-bottom:2px solid red;
+}
+
+.link{
+color:#4facfe;
+text-decoration:underline;
+}
+.analysis-explain{
+margin-top:15px;
+padding:12px;
+border-radius:8px;
+background:rgba(0,0,0,.25);
+}
+
+.analysis-explain:before{
+content:"➤ ";
+color:#4facfe;
+font-weight:bold;
+}
+
+.correct{
+background:rgba(0,200,0,.3);
+border-bottom:2px solid #00ff7b;
+}
+
+.incorrect{
+background:rgba(255,0,0,.25);
+border-bottom:2px solid red;
+}
+
+.phish-element{
+cursor:pointer;
+padding:3px 5px;
+border-radius:4px;
+transition:.2s;
+}
+
+.phish-element:hover{
+background:rgba(255,0,0,.2);
+}
+
+.link{
+color:#4facfe;
+text-decoration:underline;
+}
+
+.risk-bar{
+width:100%;
+height:10px;
+background:rgba(255,255,255,.2);
+border-radius:10px;
+margin-top:10px;
+overflow:hidden;
+}
+
+#riskFill{
+height:100%;
+width:0%;
+background:red;
+transition:.4s;
+}
+.email-box{
+background:#ffffff10;
+padding:20px;
+border-radius:10px;
+font-family:Arial;
+line-height:1.6;
+}
+
+.email-box p{
+margin:8px 0;
+}
+
+.email-header{
+font-size:14px;
+opacity:.9;
+}
+.retry-btn{
+  margin-left:10px;
+}
+.action-buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:20px;
+}
+
+.action-buttons .btn{
+  width:auto;
+  min-width:160px;
+  max-width:220px;
+  padding:12px 18px;
+  font-size:.95rem;
+}
+.result-box{
+  margin-top:25px;
+  width:100%;
+}
+
+.feedback{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  line-height:1.6;
+  text-align:left;
+}
+
+
+</style>
+</head>
+  
+<div id="devPanel" style="
+position:fixed;
+bottom:20px;
+right:20px;
+background:#111;
+padding:15px;
+border-radius:10px;
+display:none;
+z-index:9999;
+">
+
+<button class="btn" onclick="goToModule('intro')">Intro</button>
+<button class="btn" onclick="goToModule('phishing')">Phishing</button>
+<button class="btn" onclick="goToModule('conceptos')">Conceptos</button>
+<button class="btn" onclick="goToModule('tipos')">Tipos</button>
+<button class="btn" onclick="goToModule('señales')">Señales</button>
+<button class="btn" onclick="goToModule('evaluacion')">Evaluación</button>
+<button class="btn" onclick="goToModule('nivel2')">Nivel 2</button>
+<button class="btn" onclick="goToModule('nivel3')">Nivel 3</button>
+<button class="btn" onclick="goToModule('caso1')">Caso 1</button>
+<button class="btn" onclick="goToModule('caso2')">Caso 2</button>
+<button class="btn" onclick="goToModule('caso3')">Caso 3</button>
+<button class="btn" onclick="goToModule('caso4')">Caso 4</button>
+<button class="btn" onclick="goToModule('caso5')">Caso 5</button>
+<button class="btn" onclick="goToModule('caso6')">Caso 6</button>
+<button class="btn" onclick="goToModule('caso7')">Caso 7</button>
+<button class="btn" onclick="goToModule('criterios')">Criterios</button>
+<button class="btn" onclick="goToModule('conclusion_final')">Conclusión</button>
+</div>
+<body>
+
+<!-- MENU -->
+<aside class="sidebar">
+  <h2> Módulos</h2>
+  <button class="menu-btn active" onclick="goToModule('intro')">Introducción</button>
+ <button class="menu-btn" onclick="goToModule('phishing')">¿Qué es el Phishing?</button>
+ <button class="menu-btn" onclick="goToModule('conceptos')">Conceptos</button>
+ <button class="menu-btn" onclick="goToModule('tipos')">Tipos</button>
+ <button class="menu-btn" onclick="goToModule('señales')">Señales</button>
+ <button class="menu-btn" onclick="goToModule('evaluacion')">Evaluación Básica</button>
+<button class="menu-btn locked" id="menuNivel2"
+        onclick="goToModule('nivel2')">
+  🔒 Nivel 2 — Análisis guiado
+</button>
+<button class="menu-btn locked" id="menuN2_1" onclick="show(41)">🔒 Contexto</button>
+<button class="menu-btn locked" id="menuN2_2" onclick="show(42)">🔒 Mensaje</button>
+<button class="menu-btn locked" id="menuN2_3" onclick="show(43)">🔒 Análisis</button>
+<button class="menu-btn locked" id="menuN2_4" onclick="show(44)">🔒 Evaluación</button>
+<button class="menu-btn locked" id="menuN2_5" onclick="show(45)">🔒 Procedimiento</button>
+<button class="menu-btn locked" id="menuN2_6" onclick="show(46)">🔒 Registro</button>
+<button class="menu-btn locked" id="menuN2_7" onclick="show(47)">🔒 Conclusión</button>
+<button class="menu-btn locked" id="menuNivel3"
+        onclick="goToModule('nivel3')">
+  🔒 Nivel 3 — Aplicación del conocimiento
+</button>
+<button class="menu-btn locked" id="menuCaso1" onclick="goToModule('caso1')">🔒 Caso 1 — Análisis de alerta</button>
+<button class="menu-btn locked" id="menuCaso2" onclick="goToModule('caso2')">🔒 Caso 2 — Instrucción de mando</button>
+<button class="menu-btn locked" id="menuCaso3" onclick="goToModule('caso3')">🔒 Caso 3 — Documento adjunto</button>
+<button class="menu-btn locked" id="menuCaso4" onclick="goToModule('caso4')">🔒 Caso 4 — Actualización de sistema</button>
+<button class="menu-btn locked" id="menuCaso5" onclick="goToModule('caso5')">🔒 Caso 5 — Actualización de sistema</button>
+<button class="menu-btn locked" id="menuCaso6" onclick="goToModule('caso6')">🔒 Caso 6 — Actualización de sistema</button>
+<button class="menu-btn locked" id="menuCaso7" onclick="goToModule('caso7')">🔒 Caso 7 — Actualización de sistema</button>
+<button class="menu-btn locked" id="menuCriterios"
+onclick="goToModule('criterios')">
+🔒 Criterios de detección
+</button>
+<button class="menu-btn locked" id="menuConclusion"
+onclick="goToModule('conclusion_final')">
+🔒 Conclusión final
+</button>
+</aside>
+
+<main class="main">
+  <div class="metrics">
+    <span id="metricScore">Puntaje: 0</span>
+    <span id="metricLevel">Nivel: Básico</span>
+    <span id="metricProgress">Progreso: 0%</span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> </span><span> </span>
+    <span> </span><span> </span><span> </span><span> 
+   
+    <button class="btn" onclick="activarPantallaCompleta()">
+  ⛶ Pantalla completa
+</button>
+  </div>
+
+
+  <!-- INTRODUCCIÓN -->
+  <section class="slide active">
+  <h1>Bienvenido a la Guía Interactiva sobre Phishing</h1>
+
+  <p>
+    Te damos la bienvenida a esta<strong> guía interactiva sobre phishing</strong>,
+    diseñada para ayudarte a comprender y prevenir uno de los riesgos
+    más frecuentes en el entorno digital actual.
+  </p>
+
+  <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c"
+       style="width:40%;border-radius:12px;display:block;margin:20px auto"
+       alt="Bienvenida a la guía">
+
+  <p>
+    No necesitas conocimientos previos en informática o ciberseguridad.
+    Esta guía está pensada para cualquier persona que utilice
+    correo electrónico, redes sociales o servicios en línea.
+  </p>
+
+  <p>
+    Hoy en día, cualquier persona que utiliza internet para comunicarse
+    trabajar o realizar trámites y puede convertirse en objetivo de ataques
+    digitales. Por esta razón, es fundamental desarrollar conocimientos
+    básicos de seguridad informática.
+  </p>
+  <h3>¿Cómo aprenderás?</h3>
+
+  <ul>
+    <li>Explicaciones claras y estructuradas</li>
+    <li>Ejemplos visuales realistas</li>
+    <li>Actividades interactivas</li>
+  </ul>
+
+  <p class="slide-final">
+    No necesitas experiencia previa. 
+    Solo tu atención y disposición para aprender.
+  </p>
+
+  <button class="btn" onclick="next()">Siguiente</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+<section class="slide">
+  <h2>¿Por qué es importante esta guía?</h2>
+
+  <p>
+    En la actualidad, muchos ataques informáticos no se basan en fallas técnicas,
+    sino en engañar a las personas para que revelen información confidencial.
+  </p>
+
+  <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f"
+       style="width:40%;border-radius:12px;display:block;margin:20px auto"
+       alt="Problema del phishing">
+
+  <p>
+    El phishing es una de las amenazas más utilizadas porque aprovecha:
+  </p>
+
+  <ul>
+    <li>La confianza del usuario</li>
+    <li>El desconocimiento</li>
+    <li>La urgencia o presión psicológica</li>
+  </ul>
+
+  <p>
+    Muchas víctimas no son conscientes del ataque hasta que el daño ya ocurrió,
+    lo que puede derivar en pérdida de información, acceso no autorizado
+    o afectaciones económicas.
+  </p>
+
+  <p class="slide-final">
+    Por ello, la educación y la prevención son fundamentales
+    para reducir riesgos en el entorno digital.
+  </p>
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+<section class="slide">
+  <h2>Objetivo y finalidad de la guía</h2>
+
+  <p>
+    El objetivo principal de esta guía es desarrollar en el usuario
+    la capacidad de identificar, analizar y prevenir ataques de phishing
+    en distintos entornos digitales.
+  </p>
+
+  <img src="https://images.unsplash.com/photo-1584438784894-089d6a62b8fa"
+       style="width:40%;border-radius:12px;display:block;margin:20px auto"
+       alt="Objetivos de aprendizaje">
+
+  <p>
+    Al finalizar esta guía, serás capaz de:
+  </p>
+
+  <ul>
+    <li>Comprender qué es el phishing y cómo funciona</li>
+    <li>Reconocer señales de alerta en mensajes sospechosos</li>
+    <li>Analizar situaciones reales de intento de fraude</li>
+    <li>Tomar decisiones seguras en entornos digitales</li>
+  </ul>
+
+  <p>
+    Esta guía no solo busca informar, sino fomentar el pensamiento crítico
+    y la responsabilidad digital en el uso de tecnologías.
+  </p>
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="unlockAndGo('phishing')">Ir al siguiente módulo</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+
+
+  <!-- ¿QUÉ ES PHISHING? -->
+<section class="slide">
+  <h2>¿Qué es el phishing?</h2>
+
+  <p>
+    El phishing es una técnica de ataque utilizada por ciberdelincuentes
+    que consiste en hacerse pasar por una entidad confiable, como un banco,
+    una empresa o una institución oficial, con el fin de engañar al usuario.
+  </p>
+
+  <p>
+    A través de mensajes falsos, el atacante busca que la víctima
+    proporcione información sensible sin darse cuenta del fraude.
+  </p>
+
+  <img src="img/2.png"
+       style="width:38%;border-radius:12px;display:block;margin:20px auto"
+       alt="Ejemplo de phishing">
+
+  <p>
+    A medida que más personas utilizan plataformas en línea para comunicarse,
+    trabajar o realizar transacciones, los atacantes identifican nuevas oportunidades
+    para explotar la confianza de los usuarios.
+  </p>
+
+  <h3>Factores que favorecen el phishing:</h3>
+  <ul>
+    <li>Uso masivo del correo electrónico y servicios digitales</li>
+    <li>Falta de conocimiento en ciberseguridad</li>
+    <li>Confianza en mensajes aparentemente legítimos</li>
+    <li>Facilidad para falsificar identidades digitales</li>
+  </ul>
+  <p>
+    Además, el phishing requiere pocos recursos técnicos, pero puede generar
+    grandes beneficios económicos para los atacantes.
+  </p>
+  <p class="slide-final">
+    Por ello, se ha convertido en uno de los métodos de ataque más utilizados
+    a nivel mundial.
+  </p>
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+<section class="slide">
+  <h2>¿Por qué surge el phishing?</h2>
+
+  <p>
+    El phishing surge como consecuencia del crecimiento de los servicios digitales
+    y del uso masivo de internet para realizar trámites, pagos y comunicaciones.
+  </p>
+
+  <p>
+    A medida que más personas utilizan plataformas en línea,
+    los atacantes identifican oportunidades para explotar la confianza
+    depositada en correos electrónicos, mensajes y sitios web.
+  </p>
+
+  <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b"
+       style="width:38%;border-radius:12px;display:block;margin:20px auto"
+       alt="Crecimiento de amenazas digitales">
+
+  <p>
+    Además, el phishing requiere pocos recursos técnicos,
+    pero puede generar grandes beneficios económicos para los atacantes,
+    lo que explica su alta frecuencia.
+  </p>
+ <h3>Factores que favorecen el phishing:</h3>
+  <ul>
+    <li>Uso masivo del correo electrónico y servicios digitales</li>
+    <li>Falta de conocimiento en ciberseguridad</li>
+    <li>Confianza en mensajes aparentemente legítimos</li>
+    <li>Facilidad para falsificar identidades digitales</li>
+  </ul>
+  <p>
+    Además, el phishing requiere pocos recursos técnicos, pero puede generar
+    grandes beneficios económicos para los atacantes.
+  </p>
+  <p class="slide-final">
+    Por ello, se ha convertido en uno de los métodos de ataque más utilizados
+    a nivel mundial.
+  </p>
+
+  <button class="btn secondary" onclick="prevPhishing()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+<section class="slide">
+  <h2>Objetivo del phishing</h2>
+
+  <p>
+    El objetivo principal del phishing es obtener información confidencial
+    de manera fraudulenta, sin que la víctima sea consciente del ataque.
+  </p>
+
+  <p>
+    Los atacantes buscan acceder a datos que les permitan obtener beneficios,
+    ya sea económicos o de acceso a sistemas.
+  </p>
+  <img src="img/objetivos.png"
+       style="width:38%;border-radius:12px;display:block;margin:20px auto"
+       alt="Objetivo del phishing">
+
+ <h3>Información más buscada:</h3>
+  <ul>
+    <li>Contraseñas de cuentas personales o institucionales</li>
+    <li>Datos bancarios y financieros</li>
+    <li>Información personal y de contacto</li>
+    <li>Accesos a plataformas o sistemas digitales</li>
+  </ul>
+  <p>
+    Una vez obtenida esta información, los atacantes pueden suplantar identidades,
+    realizar fraudes o acceder a información sensible.
+  </p>
+  <p>
+    Comprender estos objetivos permite al usuario
+    tomar decisiones más seguras y prevenir incidentes de seguridad.
+  </p>
+
+  <button class="btn secondary" onclick="prevPhishing()">Anterior</button>
+  <button class="btn" onclick="goToConceptos()">Ir al siguiente módulo</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+
+
+<!-- CONCEPTOS -->
+<section class="slide">
+<h2>Conceptos clave del phishing</h2>
+
+<p>
+ Para comprender cómo funcionan los ataques de phishing,
+    es necesario identificar los conceptos fundamentales
+    que intervienen en este tipo de fraude y como se relacionan entre si.
+</p>
+
+<div class="concept-map">
+
+  <!-- CONCEPTO CENTRAL -->
+  <div class="concept-row">
+    <div class="concept-card center">
+      <h3>Ingeniería social</h3>
+      <p>
+        Base del phishing. Consiste en manipular psicológicamente a las personas
+        para que realicen acciones sin analizar los riesgos.
+      </p>
+    </div>
+  </div>
+
+  <!-- NIVEL INTERMEDIO -->
+  <div class="concept-row">
+    <div class="concept-card">
+      <h3>Spoofing</h3>
+      <p>
+        Técnica que permite falsificar la identidad digital mediante correos,
+        sitios web o números falsificados.
+      </p>
+    </div>
+
+    <div class="concept-card">
+      <h3>Vector de ataque</h3>
+      <p>
+        Medio por el cual se llega a la victima:
+        correo, SMS, llamadas o redes sociales.
+      </p>
+    </div>
+
+    <div class="concept-card">
+      <h3>Mensaje fraudulento</h3>
+      <p>
+        Contenido diseñado para engañar,
+        presentada como alertas, amenazas o avisos urgentes.
+      </p>
+    </div>
+  </div>
+
+  <!-- NIVEL FINAL -->
+  <div class="concept-row">
+    <div class="concept-card">
+      <h3>Credenciales</h3>
+      <p>
+        Información de acceso como contraseñas o códigos
+        que permiten ingresar a sistemas o cuentas.
+      </p>
+    </div>
+
+    <div class="concept-card">
+      <h3>Autenticación</h3>
+      <p>
+        Proceso que verifica la identidad del usuario,
+        el cual es vulnerado mediante phishing.
+      </p>
+    </div>
+
+    <div class="concept-card">
+      <h3>Suplantación de marca</h3>
+      <p>
+        Imitación visual de empresas o instituciones
+        para generar confianza en la víctima.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<p style="margin-top:25px">
+  Visualizar estos conceptos como un conjunto interconectado
+  facilita la identificación de patrones comunes en los ataques
+  de phishing.
+</p>
+
+
+<p style="margin-top:20px">
+  Comprender estos conceptos permite identificar patrones comunes
+  en los ataques de phishing y fortalece la capacidad de análisis
+  ante situaciones sospechosas.
+</p>
+
+
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="nextConceptos()">Siguiente</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+<section class="slide">
+ <h2>Conceptos clave del phishing</h2>
+
+<p>
+Explora los siguientes conceptos. 
+  Al seleccionar cada uno, podrás visualizar ejemplos prácticos
+  que te ayudarán a comprender cómo funcionan en situaciones reales.
+</p>
+
+
+<div class="concept-circle-map">
+
+  <div class="concept-center">Phishing</div>
+
+  <div class="concept-node" style="top:50px; left:250px"
+       onclick="goToConceptDetail(8)">
+    <h4>Ingeniería social</h4>
+    <p>Manipulación psicológica del usuario.</p>
+  </div>
+
+  <div class="concept-node" style="top:200px; right:0"
+       onclick="goToConceptDetail(9)">
+    <h4>Spoofing</h4>
+    <p>Suplantación de identidad digital.</p>
+  </div>
+
+  <div class="concept-node" style="bottom:0; left:250px"
+       onclick="goToConceptDetail(11)">
+    <h4>Mensaje fraudulento</h4>
+    <p>Contenido diseñado para engañar.</p>
+  </div>
+
+  <div class="concept-node" style="top:200px; left:0"
+       onclick="goToConceptDetail(12)">
+    <h4>Credenciales</h4>
+    <p>Datos de acceso a sistemas.</p>
+  </div>
+
+  <div class="concept-node" style="bottom:150px; right:40px"
+       onclick="goToConceptDetail(10)">
+    <h4>Vector de ataque</h4>
+    <p>Medio por el que llega el ataque.</p>
+  </div>
+
+  <div class="concept-node" style="bottom:150px; left:40px"
+       onclick="goToConceptDetail(13)">
+    <h4>Autenticación</h4>
+    <p>Proceso de verificación de identidad.</p>
+  </div>
+
+</div>
+<p style="margin-top:20px;">
+    Identificar estos elementos te permitirá reconocer patrones comunes
+    en los ataques de phishing.
+  </p>
+
+ <button class="btn secondary" onclick="prev()">
+  Anterior
+</button>
+  <button class="btn" onclick="goToTipos()">Ir al siguiente módulo</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+<section class="slide">
+  <h2>Ingeniería social</h2>
+
+  <p>
+    La ingeniería social es la base de la mayoría de los ataques de phishing.
+    Consiste en manipular psicológicamente a una persona para que realice una acción
+    sin analizarla de forma crítica.
+  </p>
+
+  <div class="image-row">
+    <img src="img/mapa ingenieria.png" alt="Ingeniería social">
+  </div>
+
+    <p>
+    Los atacantes aprovechan factores emocionales y conductuales
+    para influir en las decisiones del usuario.
+  </p>
+
+  <h3>Principales técnicas utilizadas:</h3>
+  <ul>
+    <li>Miedo (amenazas o bloqueos de cuenta)</li>
+    <li>Urgencia (acciones inmediatas)</li>
+    <li>Confianza (suplantación de entidades conocidas)</li>
+    <li>Curiosidad (mensajes llamativos o engañosos)</li>
+  </ul>
+  <p class="slide-final">
+    El objetivo es provocar una reacción impulsiva,
+    evitando que el usuario analice la situación.
+  </p>
+
+  <button class="btn secondary" onclick="goBackToConceptMap()">
+    Regresar al mapa de Conceptos
+  </button>
+</section>
+
+
+<section class="slide">
+  <h2>Spoofing</h2>
+
+  <p>
+    El spoofing es una técnica utilizada en el phishing que consiste en
+    falsificar la identidad de una fuente para hacer creer al usuario
+    que el mensaje proviene de una entidad legítima.
+  </p>
+
+   <div class="image-row">
+        <img src="img/spoo2.png" alt="Suplantación de identidad">
+  </div>
+   <p>
+    Los atacantes pueden modificar elementos como el correo electrónico,
+    el nombre del remitente o incluso la apariencia de un sitio web.
+  </p>
+
+  <h3>Ejemplos comunes de spoofing:</h3>
+  <ul>
+    <li>Correos que aparentan ser de bancos o instituciones</li>
+    <li>Páginas web falsas que imitan sitios oficiales</li>
+    <li>Direcciones de correo similares a las originales</li>
+  </ul>
+  <p>
+    A simple vista, estos mensajes pueden parecer legítimos,
+    lo que dificulta su detección si no se revisan los detalles.
+  </p>
+
+  <button class="btn secondary" onclick="goBackToConceptMap()">
+
+    Regresar al mapa de Conceptos
+  </button>
+</section>
+<section class="slide">
+  <h2>Vector de ataque</h2>
+
+  <p>
+   es el medio por el cual un intento de phishing
+  llega a la víctima donde el atacante utiliza un canal para
+  establecer contacto y ejecutar el engaño.
+  </p>
+
+  <div class="image-row">
+    <img src="img/spoooofingmapa.png" alt="Vector de ataque">
+  </div>
+
+ <p>
+    Los atacantes utilizan múltiples canales para aumentar la probabilidad
+    de éxito del ataque, adaptándose al comportamiento del usuario.
+  </p>
+
+  <h3>Principales vectores de ataque:</h3>
+  <ul>
+    <li>Correo electrónico (email phishing)</li>
+    <li>Mensajes SMS (smishing)</li>
+    <li>Llamadas telefónicas (vishing)</li>
+    <li>Redes sociales y mensajería instantánea</li>
+  </ul>
+  <p>
+    Cada vector presenta características distintas, pero todos comparten
+    el mismo objetivo: engañar al usuario.
+  </p>
+
+   <button class="btn secondary" onclick="goBackToConceptMap()">
+    Regresar al mapa de Conceptos
+  </button>
+</section>
+<section class="slide">
+  <h2>Mensaje fraudulento</h2>
+
+  <p>
+    Es el contenido diseñado para engañar al usuario.
+    Generalmente incluye alertas urgentes o amenazas.
+  </p>
+
+  <div class="image-row">
+    <img src="img/bajercito mensaje.png" alt="Mensaje fraudulento">
+    
+  </div>
+  <p>
+    Estos mensajes suelen imitar comunicaciones legítimas y utilizan
+    estrategias psicológicas para generar confianza o urgencia.
+  </p>
+
+  <h3>Características comunes:</h3>
+  <ul>
+    <li>Alertas de seguridad o bloqueo de cuenta</li>
+    <li>Solicitudes urgentes de verificación</li>
+    <li>Ofertas o premios falsos</li>
+    <li>Enlaces o archivos adjuntos sospechosos</li>
+  </ul>
+  <p>
+    El objetivo es que el usuario actúe sin analizar el contenido,
+    haciendo clic en enlaces o proporcionando información sensible.
+  </p>
+  <p class="slide-final">
+    Un mensaje bien diseñado puede parecer real, pero siempre deja señales.
+  </p>
+
+   <button class="btn secondary" onclick="goBackToConceptMap()">
+    Regresar al mapa de Conceptos
+  </button>
+</section>
+<section class="slide">
+  <h2>Credenciales</h2>
+
+  <p>
+    Las credenciales son los datos que permiten autenticar la identidad
+    de un usuario dentro de un sistema o plataforma digital.
+  </p>
+
+  <div class="image-row">
+    <img src="img/robo credenciales.png" alt="Robo de credenciales">
+  </div>
+   <p>
+    En los ataques de phishing, las credenciales son uno de los principales
+    objetivos, ya que permiten a los atacantes acceder directamente a cuentas
+    personales o institucionales.
+  </p>
+
+  <h3>Ejemplos de credenciales:</h3>
+  <ul>
+    <li>Contraseñas</li>
+    <li>Nombres de usuario</li>
+    <li>Códigos de verificación</li>
+    <li>Tokens de seguridad</li>
+  </ul>
+  <p>
+    Una vez obtenidas, estas credenciales pueden ser utilizadas para suplantar
+    la identidad del usuario y realizar acciones sin su consentimiento.
+  </p>
+  <p class="slide-final">
+    Proteger tus credenciales es proteger tu identidad digital.
+  </p>
+
+   <button class="btn secondary" onclick="goBackToConceptMap()">
+    Regresar al mapa de Conceptos
+  </button>
+</section>
+<section class="slide">
+  <h2>Autenticación</h2>
+
+  <p>
+    La autenticación es el proceso mediante el cual un sistema verifica
+    la identidad de un usuario antes de permitirle el acceso.
+  </p>
+
+ <div class="image-row">
+    <img src="img/autenticacion-dos-factores-funcionamiento.png" alt="Autenticación">
+  </div>
+  <p>
+    Este proceso se basa en la validación de credenciales, como contraseñas,
+    códigos de verificación o métodos adicionales de seguridad.
+  </p>
+
+  <h3>Métodos comunes de autenticación:</h3>
+  <ul>
+    <li>Contraseña tradicional</li>
+    <li>Códigos de verificación (OTP)</li>
+    <li>Autenticación en dos factores (2FA)</li>
+    <li>Biometría (huella, rostro)</li>
+  </ul>
+  <p>
+    El phishing busca vulnerar este proceso obteniendo credenciales legítimas
+    sin necesidad de atacar directamente al sistema.
+  </p>
+  <p class="slide-final">
+    Si un atacante obtiene tus credenciales, puede superar la autenticación
+    sin levantar sospechas.
+  </p>
+
+   <button class="btn secondary" onclick="goBackToConceptMap()">
+    Regresar al mapa de Conceptos
+  </button>
+</section>
+
+
+  <!-- TIPOS -->
+<section class="slide">
+ 
+  <h2>Tipos de phishing</h2>
+
+  <p>
+    El phishing puede presentarse de diferentes formas dependiendo del medio
+    utilizado y del nivel de sofisticación del ataque.
+  </p>
+  <p>
+    Algunos ataques son masivos y fáciles de identificar, mientras que otros
+    son personalizados y más difíciles de detectar.
+  </p>
+
+  <div class="phishing-grid">
+
+    <!-- COMUNES -->
+    <div class="phishing-card" onclick="goToPhishingDetail(15)">
+      <h3>Email phishing</h3>
+      <p class="desc">
+        Correos electrónicos falsos que aparentan ser de empresas o instituciones.
+      </p>
+      <p class="impact">
+        📧 Muy común | Alto volumen
+      </p>
+    </div>
+
+    <div class="phishing-card" onclick="goToPhishingDetail(16)">
+      <h3>Smishing</h3>
+      <p class="desc">
+        Mensajes SMS con enlaces fraudulentos o avisos urgentes.
+      </p>
+      <p class="impact">
+        📱 Dispositivos móviles
+      </p>
+    </div>
+
+    <div class="phishing-card" onclick="goToPhishingDetail(17)">
+      <h3>Vishing</h3>
+      <p class="desc">
+        Llamadas telefónicas donde el atacante se hace pasar por personal autorizado.
+      </p>
+      <p class="impact">
+        ☎️ Ingeniería social directa
+      </p>
+    </div>
+
+    <div class="phishing-card" onclick="goToPhishingDetail(18)">
+      <h3>Phishing en redes sociales</h3>
+      <p class="desc">
+        Mensajes directos enviados desde cuentas falsas o comprometidas.
+      </p>
+      <p class="impact">
+        🌐 Confianza entre contactos
+      </p>
+    </div>
+
+    <!-- AVANZADOS -->
+    <div class="phishing-card advanced" onclick="goToPhishingDetail(19)">
+      <span class="advanced-badge">Amenaza avanzada</span>
+      <h3>Spear phishing</h3>
+      <p class="desc">
+        Ataques personalizados dirigidos a una persona específica.
+      </p>
+      <p class="impact">
+        🎯 Alta credibilidad
+      </p>
+    </div>
+
+    <div class="phishing-card advanced" onclick="goToPhishingDetail(20)">
+      <span class="advanced-badge">Amenaza avanzada</span>
+      <h3>Whaling</h3>
+      <p class="desc">
+        Ataques dirigidos a altos mandos o personal con poder de decisión.
+      </p>
+      <p class="impact">
+        🐋 Impacto estratégico
+      </p>
+    </div>
+
+  </div>
+
+  <p style="margin-top:25px;opacity:.9">
+    Los ataques avanzados suelen utilizar información real del objetivo,
+    lo que los hace más difíciles de detectar y más peligrosos para
+    instituciones gubernamentales y militares.
+  </p>
+
+<div class="next-module">
+  <button class="btn" onclick="goToModule('señales')">
+    Ir al siguiente módulo
+  </button>
+</div>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+<section class="slide">
+  <h2>Email phishing</h2>
+
+  <p>
+    El <strong>email phishing</strong> es el tipo de phishing más común.
+    Consiste en el envío de correos electrónicos falsos que aparentan
+    ser enviados por empresas, bancos o instituciones legítimas.
+  </p>
+
+  <div class="image-row">
+    <img src="img/emailphisihng copel.png" alt="Correo phishing">
+  </div>
+
+  <p>
+    Estos mensajes buscan engañar al usuario para que realice acciones
+    como hacer clic en enlaces maliciosos o descargar archivos peligrosos.
+  </p>
+
+  <h3>Características comunes:</h3>
+  <ul>
+    <li>Mensajes que aparentan ser oficiales</li>
+    <li>Enlaces que redirigen a páginas falsas</li>
+    <li>Solicitudes de datos personales o credenciales</li>
+    <li>Errores ortográficos o formatos inusuales</li>
+  </ul>
+  <p>
+    Debido a su alcance masivo, este tipo de ataque afecta tanto a usuarios
+    individuales como a organizaciones.
+  </p>
+  <p class="slide-final">
+    Nunca confíes en un correo sin verificar su origen.
+  </p>
+
+  <button class="btn secondary" onclick="goBackToTipos()">
+    Anterior
+  </button>
+</section>
+<section class="slide">
+  <h2>Smishing</h2>
+
+  <p>
+    El <strong>smishing</strong> es una variante del phishing
+    que utiliza mensajes SMS para engañar al usuario y obtener 
+    información confidencial.
+  </p>
+
+  <div class="image-row">
+    <img src="img/SMISHING BANJU.png" alt="Smishing SMS">
+  </div>
+
+  <p>
+    Estos mensajes suelen aparentar ser notificaciones importantes,
+    como alertas bancarias, paquetes pendientes o promociones falsas.
+  </p>
+
+  <h3>Características comunes:</h3>
+  <ul>
+    <li>Mensajes cortos con sentido de urgencia</li>
+    <li>Enlaces acortados o sospechosos</li>
+    <li>Solicitudes de verificación inmediata</li>
+    <li>Números desconocidos o no oficiales</li>
+  </ul>
+  <p>
+    Debido al uso constante de dispositivos móviles, este tipo de ataque
+    puede ser más efectivo y difícil de detectar.
+  </p>
+
+  <button class="btn secondary" onclick="goBackToTipos()">
+    Anterior
+  </button>
+</section>
+<section class="slide">
+  <h2>Vishing</h2>
+
+  <p>
+    El <strong>vishing</strong> es un tipo de phishing que se realiza
+    mediante llamadas telefónicas. El atacante se comunica directamente
+    con la víctima haciéndose pasar por personal autorizado.
+  </p>
+
+  <div class="image-row">
+    <img src="img/VISHING.png" alt="Vishing llamada fraudulenta">
+  </div>
+
+  <p>
+    Durante la llamada, el atacante puede fingir ser parte de un banco,
+    una institución gubernamental o un área de soporte técnico.
+    Utiliza un lenguaje formal y urgente para generar confianza.
+  </p>
+
+  <p>
+    En instituciones militares o gubernamentales, este tipo de ataque
+    puede aprovechar la jerarquía y la obediencia para obtener
+    información sensible o accesos internos.
+  </p>
+  <h3>Características comunes:</h3>
+  <ul>
+    <li>Suplantación de bancos o instituciones oficiales</li>
+    <li>Solicitudes urgentes de información personal</li>
+    <li>Uso de lenguaje convincente o intimidante</li>
+    <li>Promesas de ayuda o solución inmediata</li>
+  </ul>
+
+  <p>
+    Este tipo de ataque es más directo, ya que existe interacción en tiempo real,
+    lo que aumenta la presión sobre la víctima.
+  </p>
+
+  <p class="slide-final">
+    Ninguna institución confiable solicita datos sensibles por llamada.
+  </p>
+
+  <button class="btn secondary" onclick="goBackToTipos()">Anterior</button>
+</section>
+<section class="slide">
+  <h2>Phishing en redes sociales</h2>
+
+  <p>
+    Este tipo de phishing se lleva a cabo a través de mensajes directos
+    en redes sociales como Facebook, Instagram o WhatsApp,
+    utilizando cuentas falsas o comprometidas.
+  </p>
+
+  <div class="image-row">
+    <img src="img/REDES SOCIALES.png" alt="Phishing en redes sociales">
+  </div>
+
+  <p>
+    Los atacantes se hacen pasar por amigos, compañeros de trabajo
+    o páginas oficiales, enviando enlaces o archivos maliciosos.
+  </p>
+
+  <p>
+    Este método es peligroso porque el usuario suele bajar la guardia
+    al creer que el mensaje proviene de alguien conocido.
+  </p>
+    <h3>Características comunes:</h3>
+  <ul>
+    <li>Mensajes enviados por “amigos” o cuentas conocidas</li>
+    <li>Enlaces sospechosos o acortados</li>
+    <li>Promociones, premios o contenido llamativo</li>
+    <li>Solicitudes de ayuda o dinero</li>
+  </ul>
+  <p>
+    En muchos casos, las cuentas utilizadas ya han sido comprometidas,
+    lo que aumenta la credibilidad del mensaje.
+  </p>
+  <p class="slide-final">
+    No confíes en un mensaje solo porque proviene de alguien conocido.
+  </p>
+
+  <button class="btn secondary" onclick="goBackToTipos()">Anterior</button>
+</section>
+<section class="slide">
+  <h2>Spear phishing</h2>
+
+  <p>
+    El <strong>spear phishing</strong> es un ataque más avanzado
+    dirigido a una persona específica. 
+    A diferencia del phishing común, este ataque es
+    personalizado y utiliza información real de la víctima.
+  </p>
+
+  <div class="image-row">
+    <img src="img/speear phishing.png" alt="Spear phishing ataque dirigido">
+  </div>
+
+  <p>
+    El atacante investiga previamente al objetivo, obteniendo datos
+    como su cargo, funciones o relaciones laborales para hacer
+    el mensaje más creíble.
+  </p>
+
+  <p>
+    En el ámbito militar o institucional, este tipo de ataque
+    representa una amenaza grave, ya que puede dirigirse a personal
+    clave o áreas estratégicas.
+  </p>
+    <h3>Características principales:</h3>
+  <ul>
+    <li>Mensajes personalizados con datos reales</li>
+    <li>Suplantación de contactos o superiores</li>
+    <li>Alta credibilidad del mensaje</li>
+    <li>Objetivo específico (persona o área)</li>
+  </ul>
+  <p>
+    Este tipo de ataque es más difícil de detectar, ya que no parece genérico
+    y puede adaptarse al contexto laboral o personal de la víctima.
+  </p>
+  <p class="slide-final">
+    Mientras más personalizado es el mensaje, mayor es el riesgo.
+  </p>
+
+
+  <button class="btn secondary" onclick="goBackToTipos()">Anterior</button>
+</section>
+<section class="slide">
+  <h2>Whaling</h2>
+
+  <p>
+    El <strong>whaling</strong> es una variante del spear phishing dirigida
+    a personas con altos cargos dentro de una organización, como directivos
+    o responsables de áreas estratégicas.
+  </p>
+
+  <div class="image-row">
+    <img src="img/whaling1.0.png"
+         alt="Whaling ataque a altos mandos">
+  </div>
+
+  <p>
+    Estos ataques buscan aprovechar el nivel de acceso y autoridad
+    de la víctima para obtener información crítica o realizar acciones
+    de alto impacto.
+  </p>
+ <h3>Características principales:</h3>
+  <ul>
+    <li>Dirigido a altos mandos o ejecutivos</li>
+    <li>Mensajes altamente personalizados</li>
+    <li>Solicitudes de transferencias o información confidencial</li>
+    <li>Uso de lenguaje formal y corporativo</li>
+    <li>Archivos adjuntos que son de origen malicioso</li>
+  </ul>
+  <p>
+    Debido a su nivel de acceso, una sola víctima puede comprometer
+    a toda la organización.
+  </p>
+  <p class="slide-final">
+    Cuanto mayor es el cargo, mayor es el impacto del ataque.
+  </p>
+
+  <button class="btn secondary" onclick="goBackToTipos()">Anterior</button>
+  
+</section>
+
+  <!-- SEÑALES -->
+  <section class="slide">
+  <h2>Señales de alerta</h2>
+
+  <p>
+    Los ataques de phishing suelen presentar características comunes
+    que permiten identificarlos antes de que el engaño tenga éxito.
+    Estas señales aparecen en correos electrónicos, mensajes SMS,
+    llamadas telefónicas y redes sociales.
+  </p>
+
+  <p>
+    Reconocer estas señales es fundamental para proteger la información
+    personal, institucional y operativa. A continuación, se explican
+    las señales más frecuentes de forma progresiva.
+  </p>
+
+  <img src="img/señales de alertaaaaaaaaaaa.png"
+       alt="Diagrama general de phishing"
+       style="width:50%;display:block;margin:25px auto;border-radius:12px">
+
+  <p class="slide-final">
+    Detectar las señales a tiempo es la mejor defensa contra el phishing.
+  </p>
+
+  <button class="btn" onclick="next()">Siguiente</button>
+
+  <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+</section>
+<section class="slide">
+  <h2>Urgencia o amenaza</h2>
+
+  <p>
+    Una de las señales más comunes del phishing es la creación de
+    un sentido de urgencia. El atacante busca que la víctima actúe
+    rápidamente sin analizar el contenido del mensaje.
+  </p>
+
+  <p>
+    Frases como “su cuenta será bloqueada”, “último aviso” o
+    “verifique su información ahora” buscan generar miedo,
+    ansiedad o presión psicológica.
+  </p>
+
+  <img src="img/urgencia y amenzassss.png"
+       alt="Mensaje de phishing con urgencia"
+       style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+  <p>
+    En instituciones militares este tipo de presión
+    puede provocar decisiones apresuradas que comprometan
+    información sensible.
+  </p>
+  <p>⚠️ Los mensajes legítimos rara vez exigen acciones inmediatas bajo amenaza.⚠️</p>
+  
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</section>
+<section class="slide">
+  <h2>Errores ortográficos y redacción deficiente</h2>
+
+  <p>
+    Una característica frecuente en los ataques de phishing es la presencia
+    de errores ortográficos, gramaticales o inconsistencias en el diseño.
+    Estos elementos reflejan la falta de control de calidad en la elaboración
+    del mensaje.
+  </p>
+
+  <p>
+    La falta de coherencia en el lenguaje y diseño es un indicador técnico
+    relevante para la detección de phishing.
+  </p>
+
+  <img src="img/MENSAJE ORTOGRAIDA.png"
+       alt="Correo con errores ortográficos"
+       style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+  <p>
+    A diferencia de las comunicaciones oficiales, los mensajes fraudulentos
+    suelen presentar fallas en redacción, formato o identidad visual,
+    lo que puede indicar su origen malicioso.
+  </p>
+  <p>
+    Estos errores pueden deberse a campañas masivas automatizadas
+    o a la intención de evadir filtros de seguridad mediante variaciones
+    en el contenido.
+  </p>  
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</section>
+<section class="slide">
+  <h2>Enlaces sospechosos</h2>
+
+  <p>
+    Los enlaces son uno de los elementos más utilizados en los ataques de phishing.
+    A través de ellos, los atacantes redirigen a las víctimas hacia sitios web
+    falsos diseñados para robar información.
+  </p>
+
+  <p>
+    Estos enlaces pueden contener dominios extraños,
+    errores en el nombre de la empresa o direcciones web
+    excesivamente largas.
+  </p>
+
+  <img src="img/ENLACE SOSPECHOSO.png"
+       alt="Ejemplo de enlace sospechoso"
+       style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+  <h3>Indicadores clave:</h3>
+  <ul>
+    <li>Dominios con variaciones mínimas (ej: g00gle.com)</li>
+    <li>Uso de subdominios engañosos</li>
+    <li>Enlaces acortados que ocultan la URL real</li>
+    <li>Diferencia entre el texto del enlace y la dirección real</li>
+  </ul>
+  <p>
+    En muchos casos, el enlace mostrado no coincide con el destino real,
+    lo que permite redirigir al usuario sin que lo note.
+  </p>
+  <p>
+    Verificar la URL antes de hacer clic es una de las prácticas más efectivas
+    para prevenir ataques de phishing.
+  </p>
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</section>
+<section class="slide">
+  <h2>Solicitud de datos confidenciales</h2>
+
+  <p>
+    Una de las señales más críticas en los ataques de phishing es la
+    solicitud directa de información confidencial, como credenciales,
+    códigos de verificación o datos personales.
+  </p>
+
+  <p>
+    Ninguna institución legítima solicita este tipo de información
+    mediante correos electrónicos, mensajes o enlaces externos.
+  </p>
+
+  <img src="img/INCIO SESION.png"
+       alt="Página falsa de inicio de sesión"
+       style="width:45%;display:block;margin:25px auto;border-radius:12px">
+
+  <h3>Indicadores clave:</h3>
+  <ul>
+    <li>Solicitudes de contraseñas o códigos de verificación</li>
+    <li>Peticiones de datos bancarios o personales</li>
+    <li>Mensajes de “verificación de cuenta”</li>
+    <li>Formularios externos o enlaces sospechosos</li>
+  </ul>
+  <p>
+    ⚠️ Desde un enfoque de ciberseguridad, este tipo de ataque se asocia
+    con la exfiltración de datos, permitiendo accesos no autorizados
+    y suplantación de identidad.
+  </p>
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</section>
+<section class="slide">
+
+  <h2>Archivos adjuntos maliciosos</h2>
+  <p>
+    Los archivos adjuntos son un vector común en ataques de phishing,
+    utilizados para distribuir malware o robar información del usuario.
+  </p>
+  <img src="img/arichos malicioso.png"
+       alt="Página falsa de inicio de sesión"
+       style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+  <p>
+    Estos archivos pueden aparentar ser documentos legítimos, como facturas,
+    reportes o notificaciones, pero contienen código malicioso.
+  </p>
+
+  <h3>Indicadores clave:</h3>
+  <ul>
+    <li>Archivos inesperados o no solicitados</li>
+    <li>Extensiones sospechosas (.exe, .zip, .html, .js)</li>
+    <li>Documentos que solicitan habilitar macros</li>
+    <li>Nombres engañosos o urgentes</li>
+  </ul>
+  <p>
+    Al abrir el archivo, se puede ejecutar malware que permite al atacante
+    acceder al sistema, robar datos o tomar control del dispositivo.
+  </p>
+    <p>
+    ⚠️ Técnicamente, estos ataques pueden involucrar malware como troyanos,
+    keyloggers o ransomware, los cuales se ejecutan tras la interacción del usuario.⚠️
+  </p>
+  <p>
+    Nunca abras archivos adjuntos sin verificar su origen y legitimidad.
+  </p>
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+
+</section>
+<section class="slide">
+  <h2>Ofertas y premios irreales</h2>
+
+  <p>
+    El phishing suele usar <strong>premios falsos</strong> para engañar al usuario.
+    Promete beneficios atractivos para que actúes sin pensar.
+  </p>
+  <p>
+    Estos mensajes buscan atraer la atención de la víctima
+    y provocar que interactúe con enlaces o archivos maliciosos.
+  </p>
+
+  <img src="img/OFERTA FALSA.png"
+       alt="Oferta falsa de phishing"
+       style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+  <p>
+    El mensaje simula ser de una empresa confiable e indica que has ganado
+    un premio, solicitando datos personales o que accedas a un enlace
+    para “reclamarlo”.
+  </p>
+  <h3>Indicadores clave:</h3>
+  <ul>
+   <li>Premios sin participación previa</li>
+   <li>Urgencia para reclamar de inmediato</li>
+   <li>Solicitud de datos personales o bancarios</li>
+   <li>Ofertas exageradas o poco creíbles</li>
+  </ul>
+  <p>
+    Al interactuar con estos mensajes, el usuario puede exponer sus credenciales,
+    información personal o permitir accesos no autorizados.
+  </p>
+  <p>
+    ⚠️ Este tipo de ataque explota el <strong>factor humano</strong>,
+    aprovechando la emoción y la confianza.
+  </p>
+
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="goToModule('evaluacion')">
+    Ir a la evaluación
+  </button>
+
+</section>
+
+             <!-- EVALUACION FACIL -->
+<section class="slide">
+  <h2>Evaluación práctica</h2>
+
+  <p>
+    Pon a prueba tus conocimientos identificando intentos de phishing
+    en situaciones reales.
+  </p>
+  <img src="img/evaluaiocn.png"
+     alt="Evaluación de phishing"
+     style="width:45%;display:block;margin:25px auto;border-radius:12px">
+     <p>
+      Analiza cada caso y decide si el mensaje es seguro o un intento de fraude.
+    </p>
+    
+    <h3>Qué debes hacer:</h3>
+    <ul>
+      <li>Leer cuidadosamente el mensaje</li>
+      <li>Identificar señales de alerta</li>
+      <li>Tomar una decisión (confiable o phishing)</li>
+      <li>Reflexionar sobre el resultado</li>
+    </ul>
+
+    <p>
+      Cada decisión te ayudará a reforzar tu capacidad para detectar amenazas
+      en entornos digitales reales.
+    </p>
+
+    <p>
+      ⚠️ No todos los ataques son evidentes. Analiza antes de actuar.⚠️ 
+    </p>
+
+    <p>
+      Tu objetivo es reconocer riesgos y proteger tu información.
+    </p>
+
+  <button class="btn" onclick="next()">Comenzar entrenamiento</button>
+
+  <div class="progress"><div class="progress-bar"></div></div>
+</section>
+
+<section class="slide">
+  <h2>Situación 1 — Correo bancario urgente</h2>
+  <p class="question-counter">Pregunta 1 de 10</p>
+
+  <p>
+    Recibes un correo electrónico que aparenta ser de tu banco.
+    El mensaje indica que tu cuenta será bloqueada en menos de 24 horas
+    si no verificas tu información inmediatamente.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Remitente: alertas@banc0-seguridad.com<br>
+    Enlace: banco-verificacion-segura.info<br>
+    Tono: urgente y amenazante
+  </div>
+
+  <div class="image-row">
+    <img src="img/BANCARIO ALERTA.png">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Los bancos no amenazan con bloqueos inmediatos por correo.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Hacer clic en enlaces enviados por correo puede dirigir a páginas falsas diseñadas para robar credenciales bancarias.')">
+      Dar clic en el enlace y completar el formulario
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'La urgencia, el dominio sospechoso y el tono amenazante son señales claras de phishing. Verificar directamente con el banco evita el robo de información.')">
+      Ignorar el correo y contactar al banco por un canal oficial
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+
+<section class="slide">
+  <h2>Situación 2 — Mensaje de paquetería</h2>
+  <p class="question-counter">Pregunta 2 de 10</p>
+
+  <p>
+    Recibes un mensaje SMS indicando que tienes un paquete pendiente
+    y que debes confirmar la entrega para evitar su cancelación.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Remitente: Número desconocido<br>
+    Enlace: bit.ly/entrega-urgente<br>
+    Medio: SMS
+  </div>
+
+  <div class="image-row">
+    <img src="img/Mensaje de paquetería.png">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Las empresas de paquetería usan aplicaciones oficiales.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'El uso de enlaces acortados y números desconocidos es típico del smishing. No interactuar reduce el riesgo de fraude.')">
+      Identificarlo como smishing y no abrir el enlace
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Abrir enlaces desde SMS puede redirigir a sitios falsos diseñados para robar datos personales.')">
+      Abrir el enlace para confirmar la entrega
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+<section class="slide">
+  <h2>Situación 3 — Enlace enviado por un contacto</h2>
+  <p class="question-counter">Pregunta 3 de 10</p>
+
+  <p>
+    Un contacto en redes sociales te envía un mensaje con un enlace
+    diciendo: “Mira este video, eres tú”.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Plataforma: Red social<br>
+    Remitente: Contacto conocido<br>
+    Enlace: externo
+  </div>
+
+  <div class="image-row">
+    <img src="img/POR RED SOCIAL.png">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Las cuentas legítimas también pueden ser comprometidas.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Confiar solo porque conoces al remitente es riesgoso. Las cuentas pueden ser usadas para propagar ataques.')">
+      Abrir el enlace porque conoces a la persona
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'Desconfiar de enlaces inesperados evita infecciones y robo de credenciales.')">
+      Sospechar del enlace y no abrirlo
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+<section class="slide">
+  <h2>Situación 4 — Verificación de identidad</h2>
+  <p class="question-counter">Pregunta 4 de 10</p>
+
+  <p>
+    Recibes un correo que solicita tu contraseña para
+    “verificar tu identidad” y evitar problemas con tu cuenta.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Solicita: contraseña<br>
+    Medio: correo electrónico
+  </div>
+
+  <div class="image-row">
+    <img src="img/SOLICITIA CONTRA.png">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Ninguna institución legítima solicita contraseñas.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'Solicitar contraseñas es una señal directa de phishing. Identificarlo evita accesos no autorizados.')">
+      Identificarlo como phishing
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Compartir contraseñas permite a los atacantes tomar control total de la cuenta.')">
+      Proporcionar la información solicitada
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+<section class="slide">
+  <h2>Situación 5 — Correo profesional sospechoso</h2>
+  <p class="question-counter">Pregunta 5 de 10</p>
+
+  <p>
+    Recibes un correo muy bien redactado, sin errores ortográficos
+    y con un diseño profesional. Sin embargo, incluye un enlace
+    para “actualizar información de seguridad”.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Redacción: profesional<br>
+    Enlace: externo<br>
+    Solicita: actualización de datos
+  </div>
+
+  <div class="image-row">
+    <img src="img/correo prof sospe.png"
+         alt="Correo profesional con enlace sospechoso">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: La apariencia profesional no garantiza legitimidad.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'La buena redacción es una técnica común para generar confianza y reducir sospechas en ataques de phishing.')">
+      Confiar porque el correo se ve profesional
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'Verificar el enlace y confirmar la solicitud por canales oficiales reduce el riesgo de robo de información.')">
+      Sospechar y verificar la información por un medio oficial
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+<section class="slide">
+  <h2>Situación 6 — Archivo adjunto inesperado</h2>
+  <p class="question-counter">Pregunta 6 de 10</p>
+
+  <p>
+    Recibes un correo con una supuesta factura pendiente.
+    Incluye un archivo adjunto en formato ZIP que debes abrir
+    para revisar el cargo.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Archivo: factura.zip<br>
+    Solicitud: abrir adjunto<br>
+    Origen: desconocido
+  </div>
+
+  <div class="image-row">
+    <img src="img/arhivo adjunto.png"
+         alt="Correo con archivo adjunto sospechoso">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Los archivos comprimidos suelen ocultar malware.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'No abrir archivos no solicitados evita infecciones por malware o ransomware.')">
+      No abrir el archivo y verificar con la empresa
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Abrir archivos adjuntos sin verificar puede comprometer el equipo y la red.')">
+      Abrir el archivo para revisar el contenido
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+
+<section class="slide">
+  <h2>Situación 7 — Enlace acortado</h2>
+  <p class="question-counter">Pregunta 7 de 10</p>
+
+  <p>
+    Recibes un mensaje con un enlace acortado que supuestamente
+    te dirige a un aviso importante relacionado con tu cuenta.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Enlace: bit.ly/seguridad<br>
+    Medio: mensaje digital
+  </div>
+
+  <div class="image-row">
+    <img src="img/enlace acortado.png"
+         alt="Enlace acortado sospechoso">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Los enlaces acortados ocultan el destino real.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Abrir enlaces acortados puede redirigir a sitios maliciosos sin que lo notes.')">
+      Abrir el enlace para ver a dónde dirige
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'Desconfiar de enlaces acortados reduce el riesgo de redirecciones maliciosas.')">
+      No abrir el enlace y verificar por un canal oficial
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+<section class="slide">
+  <h2>Situación 8 — Solicitud interna urgente</h2>
+  <p class="question-counter">Pregunta 8 de 10</p>
+
+  <p>
+    Recibes un correo que aparenta ser de un superior,
+    solicitando información confidencial de manera urgente.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del mensaje:</strong><br>
+    Remitente: supuesto superior<br>
+    Solicitud: información sensible
+  </div>
+
+  <div class="image-row">
+    <img src="img/intento de phishing.png"
+         alt="Correo interno falso">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: La jerarquía también es usada como técnica de engaño.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'Verificar solicitudes inusuales por otro medio evita ataques dirigidos.')">
+      Confirmar la solicitud por otro canal oficial
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Enviar información sin verificar puede causar fugas de datos críticas.')">
+      Enviar la información por tratarse de un superior
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+<section class="slide">
+  <h2>Situación 9 — Página de inicio de sesión</h2>
+  <p class="question-counter">Pregunta 9 de 10</p>
+
+  <p>
+    Al hacer clic en un enlace, se abre una página de inicio
+    de sesión idéntica a un servicio que utilizas frecuentemente,
+    pero la dirección web es ligeramente diferente.
+  </p>
+
+  <div class="case-box">
+    <strong>Detalles del sitio:</strong><br>
+    Diseño: idéntico al original<br>
+    URL: diferente
+  </div>
+
+  <div class="image-row">
+    <img src="img/sedena inicio.png"
+         alt="Página falsa de inicio de sesión">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Revisa siempre la barra de direcciones.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Ingresar credenciales en sitios falsos permite el robo inmediato de accesos.')">
+      Ingresar usuario y contraseña
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'Cerrar la página y revisar la URL evita el robo de credenciales.')">
+      Cerrar la página y revisar la dirección web
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn" onclick="next()" style="display:none">Continuar</button>
+</section>
+
+<section class="slide">
+  <h2>Situación 10 — Acción ante phishing</h2>
+  <p class="question-counter">Pregunta 10 de 10</p>
+
+  <p>
+    Identificas un posible intento de phishing después de analizar
+    varias señales de alerta en un mensaje.
+  </p>
+
+  <div class="case-box">
+    <strong>Situación:</strong><br>
+    Ataque identificado correctamente
+  </div>
+
+  <div class="image-row">
+    <img src="img/situacion 10.png"
+         alt="Acción correcta ante phishing">
+  </div>
+
+  <button class="btn secondary hint-btn"
+    onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">
+    Ver pista
+  </button>
+  <div class="hint" style="display:none">
+    🔎 Pista: Reportar ayuda a proteger a otros usuarios.
+  </div>
+
+  <div class="phishing-grid">
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,false,
+      'Ignorar sin reportar permite que el ataque continúe afectando a otros usuarios.')">
+      Ignorar el mensaje y no hacer nada
+    </div>
+
+    <div class="phishing-card"
+      onclick="evaluateAnswer(this,true,
+      'Reportar y eliminar el mensaje ayuda a prevenir ataques futuros y fortalece la seguridad colectiva.')">
+      Reportar y eliminar el mensaje
+    </div>
+  </div>
+
+  <p class="feedback"></p>
+  <button class="btn next-btn"
+    onclick="next(); checkEvaluationResult();"
+    style="display:none">
+    Ver resultado
+  </button>
+</section>
+<section class="slide">
+  <h2>Resultado final</h2>
+
+  <p id="finalScore"></p>
+
+  <p id="finalMessage"></p>
+
+  <button class="btn" id="retryBtn" style="display:none"
+          onclick="repeatEvaluation()">
+    Repetir evaluación
+  </button>
+
+ <button class="btn" id="nextLevelBtn"
+        onclick="goToNextLevel()">
+Continuar al siguiente nivel
+</button>
+  </button>
+</section>
+<div id="levelUnlock" class="unlock-box">
+  <div class="unlock-content">
+    <h3>📘 Nivel 2 disponible</h3>
+    <p>
+      Has completado correctamente la evaluación básica.
+      Ahora continuarás con un análisis guiado de un correo electrónico
+      para identificar indicadores de phishing.
+    </p>
+  </div>
+</div>
+<section class="slide">
+
+<h2>Nivel 2 — Análisis guiado de un posible ataque de phishing</h2>
+
+<h3>Contexto del ejercicio</h3>
+
+<p>
+En este nivel se presenta un escenario simulado basado en
+casos reales de intentos de fraude digital mediante
+técnicas de phishing.
+</p>
+
+<p>
+El phishing es una de las formas más comunes de
+ingeniería social utilizadas por atacantes para obtener
+credenciales de acceso, información confidencial
+o acceso a sistemas institucionales.
+</p>
+
+<img src="img/diagrama nomber two.png"
+     alt="Diagrama del proceso de phishing"
+     style="width:55%;display:block;margin:20px auto;border-radius:12px">
+
+<p style="text-align:center;font-size:.9rem;opacity:.8">
+Diagrama simplificado del funcionamiento de un ataque de phishing.
+</p>
+
+<h3>Propósito del análisis</h3>
+
+<p>
+El objetivo de este ejercicio es desarrollar la capacidad
+de identificar indicadores de riesgo en mensajes
+electrónicos antes de interactuar con ellos.
+</p>
+
+<div class="case-box">
+
+<strong>Durante el análisis deberás:</strong><br>
+
+• Examinar cuidadosamente el contenido del mensaje<br>
+• Identificar posibles señales de manipulación o engaño<br>
+• Evaluar el nivel de riesgo del mensaje recibido
+
+</div>
+
+<h3>Importancia en la ciberseguridad institucional</h3>
+
+<p>
+En entornos institucionales o de seguridad,
+la detección temprana de intentos de phishing
+es fundamental para prevenir accesos no autorizados,
+compromiso de credenciales o filtración de información.
+</p>
+
+<p>
+El análisis cuidadoso de los mensajes recibidos
+forma parte de las prácticas básicas de seguridad
+digital dentro de cualquier organización.
+</p>
+
+<button class="btn" onclick="next()">
+Iniciar análisis
+</button>
+
+</section>
+<section class="slide">
+
+<h2>Contexto del incidente</h2>
+
+<h3>Escenario del ejercicio</h3>
+
+<p>
+Durante el desarrollo de actividades administrativas,
+un usuario recibe un correo electrónico
+que aparenta provenir de un sistema institucional de
+seguridad informática.
+</p>
+
+<p>
+El mensaje indica que se detectó un intento de acceso
+irregular en su cuenta y solicita realizar un proceso
+de verificación para confirmar la identidad del usuario.
+</p>
+
+<img src="img/ejemplo correo.png"
+     alt="Ejemplo de correo phishing"
+     style="width:55%;display:block;margin:20px auto;border-radius:12px">
+
+<p style="text-align:center;font-size:.9rem;opacity:.8">
+Ejemplo representativo de un mensaje utilizado en ataques de phishing.
+</p>
+
+<h3>Información disponible</h3>
+
+<div class="case-box">
+
+<strong>Datos del incidente:</strong><br>
+
+• Medio de contacto: correo electrónico<br>
+• Tipo de mensaje: alerta de seguridad<br>
+• Acción solicitada: verificación de credenciales<br>
+• Nivel de urgencia: alto
+
+</div>
+
+<h3>Riesgo potencial</h3>
+
+<p>
+Los ataques de phishing suelen utilizar mensajes que
+aparentan provenir de instituciones legítimas para
+generar confianza y provocar que el usuario proporcione
+información sensible o acceda a enlaces maliciosos.
+</p>
+
+<p>
+En entornos institucionales, este tipo de ataques puede
+representar un riesgo para la seguridad de los sistemas
+y la información.
+</p>
+
+<h3>Indicaciones para el ejercicio</h3>
+
+<p>
+Antes de interactuar con el mensaje recibido,
+analiza cuidadosamente los elementos del correo.
+</p>
+
+<ul>
+<li>Remitente del mensaje</li>
+<li>Contenido del correo</li>
+<li>Tipo de solicitud realizada</li>
+<li>Enlaces incluidos en el mensaje</li>
+</ul>
+
+<button class="btn secondary" onclick="prev()">Anterior</button>
+<button class="btn" onclick="next()">Ver mensaje recibido</button>
+
+</section>
+<section class="slide">
+
+<h2>Mensaje recibido</h2>
+
+<h3>Contenido del correo electrónico</h3>
+
+<p>
+A continuación se presenta el contenido del correo
+electrónico recibido por el usuario, este mensaje
+aparenta provenir de un sistema institucional de
+seguridad informática.
+</p>
+
+<p>
+Examina cuidadosamente cada uno de los elementos
+del mensaje antes de realizar cualquier acción.
+</p>
+
+<div class="email-box">
+
+<strong>De:</strong> seguridad.sistema@portal-gobmx.org<br>
+<strong>Para:</strong> usuario.institucional@correo.gob.mx<br>
+<strong>Asunto:</strong> Verificación urgente de credenciales
+
+<hr>
+
+Estimado usuario,
+
+Se detectó un intento de acceso irregular en su cuenta
+institucional durante las últimas 24 horas.
+
+Como medida de seguridad, es necesario confirmar su
+identidad y verificar sus credenciales de acceso
+para evitar la suspensión temporal del servicio.
+
+Para continuar con el proceso de verificación,
+ingrese al siguiente enlace seguro:
+
+<br><br>
+
+<span class="email-link">
+http://portal-verificacion-acceso.seguridad-gobmx.com
+</span>
+
+<br><br>
+
+En caso de no completar la verificación en un plazo
+máximo de 12 horas, el acceso a su cuenta será
+restringido por motivos de seguridad.
+
+Atentamente<br>
+Departamento de Seguridad Informática
+
+</div>
+
+<h3>Observación inicial</h3>
+
+<p>
+Los ataques de phishing suelen emplear lenguaje formal,
+referencias institucionales y situaciones de aparente urgencia
+para generar confianza y reducir el análisis crítico del usuario.
+</p>
+
+<p>
+Antes de interactuar con enlaces o proporcionar
+información personal, es fundamental evaluar la autenticidad 
+del mensaje y verificar sus elementos.
+</p>
+
+<button class="btn secondary" onclick="prev()">Anterior</button>
+<button class="btn" onclick="next()">Analizar elementos sospechosos</button>
+
+</section>
+<section class="slide">
+
+<h2>Análisis del mensaje</h2>
+
+<p>
+Examina cuidadosamente el siguiente correo electrónico.
+Haz clic sobre los elementos que consideres sospechosos
+para identificar posibles indicadores de phishing.
+</p>
+
+<div class="analysis-panel">
+
+<strong>Indicadores detectados:</strong>
+<span id="indicatorCount">0</span> / 5
+
+<br>
+
+<strong>Nivel de riesgo:</strong>
+<span id="riskLevel">Sin evaluar</span>
+
+<div class="risk-bar">
+<div id="riskFill"></div>
+</div>
+
+</div>
+
+
+<div class="email-box">
+
+<p>
+<strong>De:</strong>
+<span class="phish-element"
+data-correct="true"
+data-info="El dominio portal-gobmx.org no corresponde a un dominio institucional oficial."
+onclick="analyzeElement(this)">
+seguridad.sistema@portal-gobmx.org
+</span>
+</p>
+
+<p>
+<strong>Para:</strong>
+<span class="phish-element"
+data-correct="false"
+data-info="La dirección del destinatario parece válida y no es un indicador de phishing."
+onclick="analyzeElement(this)">
+usuario.institucional@correo.gob.mx
+</span>
+</p>
+
+<p>
+<strong>Asunto:</strong>
+<span class="phish-element"
+data-correct="true"
+data-info="El uso de lenguaje urgente busca presionar al usuario a actuar rápidamente."
+onclick="analyzeElement(this)">
+Verificación urgente de credenciales institucionales
+</span>
+</p>
+
+<p>
+<strong>Fecha:</strong>
+<span class="phish-element"
+data-correct="false"
+data-info="La fecha del mensaje no representa un indicador de phishing."
+onclick="analyzeElement(this)">
+02:14 AM
+</span>
+</p>
+
+<hr>
+
+<p>
+<span class="phish-element"
+data-correct="false"
+data-info="El saludo es común en correos legítimos."
+onclick="analyzeElement(this)">
+Estimado usuario,
+</span>
+</p>
+
+<p>
+Se detectó un intento de acceso irregular en su cuenta institucional durante las últimas 24 horas.
+</p>
+
+<p>
+<span class="phish-element"
+data-correct="true"
+data-info="El mensaje utiliza presión indicando que el acceso será suspendido si no se actúa rápidamente."
+onclick="analyzeElement(this)">
+Para evitar la suspensión del servicio es necesario confirmar su identidad de manera inmediata.
+</span>
+</p>
+
+<p>
+Acceda al siguiente enlace para completar la verificación:
+</p>
+
+<p>
+<span class="phish-element link"
+data-correct="true"
+data-info="El enlace dirige a un dominio externo que no pertenece a la institución."
+onclick="analyzeElement(this)">
+http://portal-verificacion-acceso.seguridad-gobmx.com
+</span>
+</p>
+
+<p>
+<span class="phish-element"
+data-correct="true"
+data-info="El límite de tiempo es una técnica de ingeniería social para generar presión."
+onclick="analyzeElement(this)">
+En caso de no realizar la verificación en un plazo máximo de 12 horas, su acceso será restringido.
+</span>
+</p>
+
+<p>
+Atentamente<br>
+<span class="phish-element"
+data-correct="false"
+data-info="La firma del mensaje no necesariamente indica phishing."
+onclick="analyzeElement(this)">
+Departamento de Seguridad Informática
+</span>
+</p>
+
+</div>
+
+
+<div id="analysisExplain" class="analysis-explain">
+Seleccione un elemento del mensaje para analizarlo.
+</div>
+
+<button class="btn secondary" onclick="prev()">Anterior</button>
+<button class="btn" onclick="next()">Continuar</button>
+
+</section>
+<section class="slide">
+
+<h2>Interpretación del nivel de riesgo</h2>
+
+<h3>Análisis del incidente</h3>
+
+<p>
+Tras el análisis del mensaje recibido, se identificaron múltiples
+indicadores característicos de un intento de phishing.
+</p>
+
+<img src="img/interpretacion del mensake.png"
+     alt="Proceso de phishing"
+     style="width:55%;display:block;margin:20px auto;border-radius:12px">
+
+<p style="text-align:center;font-size:.9rem;opacity:.8">
+Relación entre los elementos detectados y el proceso de ataque.
+</p>
+
+<div class="case-box">
+
+<strong>Indicadores detectados:</strong><br><br>
+
+• Remitente con dominio no institucional<br>
+• Uso de lenguaje urgente<br>
+• Enlace externo sospechoso<br>
+• Presión temporal para actuar
+
+</div>
+
+<h3>Evaluación del riesgo</h3>
+
+<p>
+La combinación de estos elementos indica un alto nivel de riesgo,
+ya que corresponde a un patrón típico de ataque de ingeniería social.
+</p>
+
+<p>
+Este tipo de mensajes busca obtener credenciales de acceso mediante
+la manipulación del usuario, lo que puede derivar en accesos no
+autorizados a sistemas institucionales.
+</p>
+
+<button class="btn secondary" onclick="prev()">Anterior</button>
+<button class="btn" onclick="next()">Continuar</button>
+
+</section>
+<section class="slide">
+
+<h2>Procedimiento institucional ante un intento de phishing</h2>
+
+<h3>Acciones recomendadas</h3>
+
+<p>
+Ante la identificación de un posible ataque de phishing,
+es fundamental seguir un procedimiento adecuado para
+reducir riesgos y proteger la información institucional.
+</p>
+
+<img src="img/imagen falsa.png"
+     alt="Sitio falso de phishing"
+     style="width:30%;display:block;margin:20px auto;border-radius:12px">
+
+<p style="text-align:center;font-size:.9rem;opacity:.8">
+Ejemplo de página falsa utilizada para capturar credenciales.
+</p>
+
+<div class="case-box">
+
+<strong>Procedimiento básico:</strong><br><br>
+
+1️⃣ No interactuar con enlaces o archivos adjuntos<br>
+2️⃣ No proporcionar información confidencial<br>
+3️⃣ Verificar la autenticidad del mensaje por canales oficiales<br>
+4️⃣ Reportar el incidente al área de seguridad informática<br>
+5️⃣ Eliminar el mensaje del sistema
+
+</div>
+
+<h3>Importancia del procedimiento</h3>
+
+<p>
+El cumplimiento de este procedimiento permite prevenir
+compromisos de cuentas institucionales y fortalece
+la postura de seguridad de la organización.
+</p>
+
+<button class="btn secondary" onclick="prev()">Anterior</button>
+<button class="btn" onclick="next()">Continuar</button>
+
+</section>
+<section class="slide">
+
+<h2>Registro del incidente de seguridad</h2>
+
+<h3>Documentación del evento</h3>
+
+<p>
+Una vez identificado el intento de phishing, es recomendable
+registrar el incidente para su análisis y seguimiento por
+parte del área de seguridad informática.
+</p>
+
+<img src="img/ejmplo evidencia.png"
+     alt="Correo phishing"
+     style="width:50%;display:block;margin:20px auto;border-radius:12px">
+
+<p style="text-align:center;font-size:.9rem;opacity:.8">
+Ejemplo de evidencia utilizada en el registro de incidentes.
+</p>
+
+<div class="case-box">
+
+<strong>Datos del incidente:</strong><br><br>
+
+Tipo de amenaza: Phishing<br>
+Medio de contacto: Correo electrónico<br>
+Nivel de riesgo: Alto<br>
+Estado: Confirmado<br>
+Acción recomendada: Reportar y eliminar el mensaje
+
+</div>
+
+<h3>Importancia del registro</h3>
+
+<p>
+El registro de incidentes permite identificar patrones
+de ataque, mejorar los mecanismos de defensa y fortalecer
+las estrategias de ciberseguridad institucional.
+</p>
+
+<button class="btn secondary" onclick="prev()">Anterior</button>
+<button class="btn" onclick="next()">Conclusión</button>
+
+</section>
+
+
+<section class="slide">
+
+<h2>Conclusión del análisis</h2>
+
+<p>
+En este nivel analizaste un caso realista de phishing,
+identificando elementos utilizados para engañar al usuario.
+</p>
+
+<p>
+Detectar señales tempranas permite prevenir
+ataques de ingeniería social y proteger
+información sensible.
+</p>
+<img src="img/conclusion12.png"
+     alt="Correo phishing"
+     style="width:50%;display:block;margin:20px auto;border-radius:12px">
+<h3>Aprendizajes clave:</h3>
+<ul>
+  <li>Los atacantes imitan comunicaciones legítimas</li>
+  <li>La urgencia es una técnica común de manipulación</li>
+  <li>Los enlaces deben verificarse antes de interactuar</li>
+  <li>Un solo indicador puede revelar un intento de phishing</li>
+</ul>
+<div class="case-box">
+
+<strong>Recomendaciones:</strong><br>
+• No interactuar con enlaces sospechosos<br>
+• Verificar solicitudes por canales oficiales<br>
+• Reportar mensajes fraudulentos
+
+</div>
+
+<button class="btn" onclick="goToNextModuleNivel2()">
+Siguiente módulo
+</button>
+
+</section>
+<div id="level3Unlock" class="unlock-box">
+  <div class="unlock-content">
+    <h3>🚀 Nivel 3 disponible</h3>
+    <p>
+      Has completado el análisis guiado correctamente.
+      Ahora accederás al nivel más avanzado,
+      donde aplicarás tu criterio en escenarios reales.
+    </p>
+  </div>
+</div>
+<section class="slide">
+
+<h2 style="text-align:center; font-size:2rem;">
+Nivel 3 — Aplicación del conocimiento
+</h2>
+
+<p style="text-align:center; font-size:1.1rem; opacity:.9;">
+Has llegado al nivel final de la guía.
+</p>
+
+<img src="img/imagen 3.png"
+     alt="Ciberseguridad avanzada"
+     style="width:45%;display:block;margin:25px auto;border-radius:14px;
+     box-shadow:0 10px 30px rgba(0,0,0,.5);">
+
+<p>
+En este nivel se integran los conocimientos adquiridos
+a lo largo del recorrido mediante el análisis de situaciones
+más cercanas a contextos reales.
+</p>
+
+<p>
+A diferencia de los niveles anteriores, no se proporcionarán
+indicadores directos. Será necesario aplicar el criterio
+desarrollado para identificar riesgos, interpretar señales
+y tomar decisiones informadas.
+</p>
+
+<div class="case-box">
+
+<strong>Indicaciones generales:</strong><br><br>
+
+• Analizar cada situación de forma crítica<br>
+• Identificar elementos sospechosos<br>
+• Evaluar el nivel de riesgo<br>
+• Determinar la acción más adecuada
+
+</div>
+
+<p style="opacity:.9;">
+Este nivel representa la consolidación del aprendizaje
+y el desarrollo de una postura activa frente a amenazas digitales.
+</p>
+
+<div style="text-align:center; margin-top:25px;">
+  <button class="btn" onclick="next()">
+    Iniciar análisis
+  </button>
+</div>
+
+</section>
+<section class="slide">
+
+<h2 style="font-size:1.8rem;">
+Caso 1 — Análisis de alerta de seguridad institucional
+</h2>
+
+<p style="opacity:.9;">
+Durante el desarrollo de actividades administrativas, un usuario recibe un correo electrónico que aparenta provenir del área de seguridad informática institucional, notificando un acceso irregular detectado en su cuenta.
+</p>
+
+<div class="case-box" style="line-height:1.6;">
+
+<strong>Contenido del mensaje:</strong><br><br>
+
+<strong>Remitente:</strong> Seccion_Informatica@defensagobmx.org<br>
+<strong>Asunto:</strong> Alerta de seguridad — verificación requerida<br><br>
+
+Estimado usuario,<br><br>
+
+Se ha detectado un intento de acceso desde una ubicación no habitual a su cuenta institucional.<br><br>
+Como medida preventiva, es necesario validar su identidad para evitar la suspensión temporal del acceso a los servicios digitales.<br><br>
+Puede realizar la verificación a través del siguiente enlace seguro:<br><br>
+
+<span class="link">https://seguridad-gobmx.verificacion-acceso.com</span><br><br>
+
+Este proceso debe completarse en un plazo no mayor a 12 horas.<br><br>
+
+Atentamente,<br>
+Cap. 1/o. Trans. Cmte. Secc. Informatica.
+
+</div>
+
+<p style="margin-top:20px;">
+<strong>Planteamiento analítico:</strong><br>
+Considerando los elementos presentados en el mensaje, determine cuál constituye el indicador más crítico para evaluar el nivel de riesgo.
+</p>
+
+<div class="phishing-grid">
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El uso de lenguaje urgente constituye una técnica de ingeniería social orientada a generar presión en el usuario. Sin embargo, por sí sola no representa el indicador más crítico del ataque.')">
+Uso de lenguaje urgente
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,true,
+'El enlace dirige a un dominio externo que no corresponde a una infraestructura institucional legítima. Este elemento representa el indicador más crítico, ya que es el medio directo para el robo de credenciales.')">
+Dominio del enlace proporcionado
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El formato del mensaje puede ser replicado con facilidad por los atacantes, por lo que no constituye un criterio confiable para determinar legitimidad.')">
+Estructura del mensaje
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'Aunque el remitente presenta inconsistencias, el enlace constituye un vector de ataque más directo y crítico en este contexto.')">
+Dirección del remitente
+</div>
+</div>
+
+<div class="result-box">
+
+  <p class="feedback"></p>
+
+  <div class="action-buttons">
+    <button class="btn next-btn" onclick="next()" style="display:none">
+      Continuar
+    </button>
+
+    <button class="btn secondary retry-btn"
+      onclick="retryCase(this)"
+      style="display:none">
+      Reintentar caso
+    </button>
+  </div>
+</section> 
+</div>
+
+<section class="slide">
+
+  <h2 style="font-size:1.8rem;">
+  Caso 2 — Instrucción urgente de mando
+  </h2>
+
+  <p style="opacity:.9;">
+  Durante el desarrollo de actividades operativas, un elemento recibe un correo electrónico que aparenta provenir de un superior jerárquico, solicitando la actualización inmediata de datos operativos bajo carácter de urgencia.
+  </p>
+
+  <div class="email-preview">
+    <h3>📧 Nuevo mensaje</h3>
+
+    <p><strong>De:</strong> Cap. 1/o Inf. Luis Ramírez Torres</p>
+    <p><strong>Para:</strong> Elemento asignado</p>
+    <p><strong>Asunto:</strong> ACTUALIZACIÓN DE DATOS OPERATIVOS - URGENTE</p>
+
+    <hr>
+
+    <p>
+      Por instrucciones del mando superior, se solicita la actualización inmediata 
+      de datos operativos del personal asignado a la unidad.
+    </p>
+
+    <p>
+      Este proceso es obligatorio y debe completarse antes de las 18:00 hrs del día de hoy.
+    </p>
+
+    <p>
+      Acceda al sistema institucional en el siguiente enlace:
+    </p>
+
+    <p style="color:#00aaff;">
+      http://sedena-gob.mx-verificacion.info/acceso
+    </p>
+
+    <p>
+      El incumplimiento de esta instrucción será reportado al área correspondiente.
+    </p>
+
+    <p>
+      Atentamente<br>
+      Cap. 1/o Inf. Luis Ramírez Torres<br>
+      Sección de Personal
+    </p>
+  </div>
+
+  <p style="margin-top:20px;">
+    <strong>Planteamiento analítico:</strong><br>
+    A partir del análisis del mensaje, identifique el elemento que representa el indicador de riesgo más relevante en este caso.
+  </p>
+
+  <div class="phishing-grid">
+
+    <div class="phishing-card"
+    onclick="evaluateAnswer(this,false,'La urgencia es una técnica de presión, pero no el indicador principal.')">
+    Carácter urgente del mensaje
+    </div>
+
+    <div class="phishing-card"
+    onclick="evaluateAnswer(this,true,'El dominio del enlace no pertenece a una infraestructura oficial, lo que indica un posible intento de phishing dirigido.')">
+    Dominio del enlace proporcionado
+    </div>
+
+    <div class="phishing-card"
+    onclick="evaluateAnswer(this,false,'El uso de jerarquía es común en ataques, pero no es el indicador técnico principal.')">
+    Uso de autoridad jerárquica
+    </div>
+
+    <div class="phishing-card"
+    onclick="evaluateAnswer(this,false,'El formato del mensaje puede ser replicado fácilmente.')">
+    Formato del mensaje
+    </div>
+
+  </div>
+
+  <div class="result-box">
+
+    <p class="feedback"></p>
+
+    <div class="action-buttons">
+      <button class="btn next-btn" onclick="next()" style="display:none">
+        Continuar
+      </button>
+
+      <button class="btn secondary retry-btn"
+        onclick="retryCase(this)"
+        style="display:none">
+        Reintentar caso
+      </button>
+    </div>
+
+  </div>
+
+</div>
+</section>
+<section class="slide">
+
+<h2 style="font-size:1.8rem;">
+Caso 3 — Envío de documento interno
+</h2>
+
+<p style="opacity:.9;">
+Durante actividades administrativas, un elemento recibe un correo electrónico proveniente aparentemente de un área interna, adjuntando un documento relacionado con información operativa.
+</p>
+
+<div class="email-preview">
+  <h3>📧 Nuevo mensaje</h3>
+
+  <p><strong>De:</strong> Sgto. 2/o Adm. Carlos Méndez</p>
+  <p><strong>Para:</strong> Elemento asignado</p>
+  <p><strong>Asunto:</strong> Envío de documento — revisión requerida</p>
+
+  <hr>
+
+  <p>
+    Se remite el documento correspondiente a la actualización de personal operativo.
+  </p>
+
+  <p>
+    Favor de revisar el archivo adjunto y confirmar recepción a la brevedad.
+  </p>
+
+  <p>
+    Documento adjunto:
+  </p>
+
+  <p style="color:#00aaff;">
+    Actualizacion_Personal_2026.zip
+  </p>
+
+  <p>
+    Quedo atento a cualquier observación.
+  </p>
+
+  <p>
+    Atentamente<br>
+    Sgto. 2/o Adm. Carlos Méndez<br>
+    Área Administrativa
+  </p>
+</div>
+
+<p style="margin-top:20px;">
+<strong>Planteamiento analítico:</strong><br>
+A partir del análisis del mensaje, identifique el elemento que representa el principal riesgo de seguridad en este caso.
+</p>
+
+<div class="phishing-grid">
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El lenguaje es formal y coherente con el contexto institucional, por lo que no representa un indicador de riesgo relevante.')">
+Redacción del mensaje
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,true,
+'Los archivos comprimidos pueden contener malware oculto. Abrir este tipo de adjuntos sin verificación representa un alto riesgo de compromiso del sistema.')">
+Archivo adjunto comprimido (.zip)
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El remitente parece pertenecer a un área interna, lo cual puede ser legítimo o suplantado, pero no es el indicador principal en este caso.')">
+Remitente del correo
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'La solicitud de confirmación es común en procesos administrativos y no representa un riesgo directo.')">
+Solicitud de confirmación
+</div>
+
+</div>
+
+<div class="result-box">
+
+  <p class="feedback"></p>
+
+  <div class="action-buttons">
+    <button class="btn next-btn" onclick="next()" style="display:none">
+      Continuar
+    </button>
+
+    <button class="btn secondary retry-btn"
+      onclick="retryCase(this)"
+      style="display:none">
+      Reintentar caso
+    </button>
+  </div>
+
+</div>
+
+</section>
+<section class="slide">
+
+<h2 style="font-size:1.8rem;">
+Caso 4 — Actualización de sistema interno
+</h2>
+
+<p style="opacity:.9;">
+Durante actividades operativas, un elemento recibe un correo electrónico aparentemente enviado por el área técnica, indicando una actualización del sistema institucional.
+</p>
+
+<div class="email-preview">
+  <h3>📧 Nuevo mensaje</h3>
+
+  <p><strong>De:</strong> Área Técnica — Sistemas</p>
+  <p><strong>Para:</strong> Personal operativo</p>
+  <p><strong>Asunto:</strong> Actualización de plataforma interna</p>
+
+  <hr>
+
+  <p>
+    Se informa que se ha realizado una actualización en la plataforma interna de gestión.
+  </p>
+
+  <p>
+    Para evitar errores en el acceso, es necesario realizar una verificación de usuario.
+  </p>
+
+  <p>
+    Puede acceder al sistema mediante el siguiente enlace:
+  </p>
+
+  <p style="color:#00aaff;">
+    https://plataforma-sedena.seguridad-acceso.net/login
+  </p>
+
+  <p>
+    En caso de presentar inconsistencias, se adjunta un archivo con el procedimiento de actualización.
+  </p>
+
+  <p style="color:#00aaff;">
+    Manual_Actualizacion_Sistema.zip
+  </p>
+
+  <p>
+    Favor de completar este proceso durante el transcurso del día.
+  </p>
+
+  <p>
+    Área Técnica de Sistemas
+  </p>
+</div>
+
+<p style="margin-top:20px;">
+<strong>Planteamiento analítico:</strong><br>
+A partir del análisis del mensaje, determine cuál representa el indicador de riesgo más crítico en este caso.
+</p>
+
+<div class="phishing-grid">
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,true,
+'El archivo comprimido representa el mayor riesgo, ya que puede contener malware diseñado para comprometer el sistema al ser ejecutado.')">
+Archivo adjunto comprimido (.zip)
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El enlace es sospechoso, pero el archivo adjunto representa un riesgo más directo de infección.')">
+Dominio del enlace proporcionado
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El lenguaje es técnico y coherente, lo que lo hace más creíble, pero no es el indicador principal.')">
+Lenguaje técnico del mensaje
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'La solicitud es común en entornos institucionales.')">
+Solicitud de actualización
+</div>
+
+</div>
+
+<div class="result-box">
+
+  <p class="feedback"></p>
+
+  <div class="action-buttons">
+    <button class="btn next-btn" onclick="next()" style="display:none">
+      Continuar
+    </button>
+
+    <button class="btn secondary retry-btn"
+      onclick="retryCase(this)"
+      style="display:none">
+      Reintentar caso
+    </button>
+  </div>
+
+</div>
+
+</section>
+<section class="slide">
+
+<h2 style="font-size:1.8rem;">
+Caso 5 — Comunicación interna comprometida
+</h2>
+
+<p style="opacity:.9;">
+Durante actividades operativas, un elemento recibe un correo electrónico proveniente de una dirección institucional conocida, correspondiente a un área interna con la que interactúa regularmente.
+</p>
+
+<div class="email-preview">
+  <h3>📧 Nuevo mensaje</h3>
+
+  <p><strong>De:</strong> recursos.humanos@defensa.gob.mx</p>
+  <p><strong>Para:</strong> Personal activo</p>
+  <p><strong>Asunto:</strong> Actualización de expediente administrativo</p>
+
+  <hr>
+
+  <p>
+    Se solicita la actualización de información administrativa del personal activo, 
+    como parte del proceso de validación de registros internos.
+  </p>
+
+  <p>
+    Para completar el proceso, ingrese al sistema institucional con sus credenciales:
+  </p>
+
+  <p style="color:#00aaff;">
+    https://portal.defensa.gob.mx.seguridad-verificacion.net/login
+  </p>
+
+  <p>
+    Este procedimiento forma parte de las auditorías internas en curso.
+  </p>
+
+  <p>
+    Atentamente<br>
+    Dirección General de Recursos Humanos
+  </p>
+</div>
+
+<p style="margin-top:20px;">
+<strong>Planteamiento analítico:</strong><br>
+A partir del análisis del mensaje, identifique el elemento que representa la principal señal de riesgo en este caso.
+</p>
+
+<div class="phishing-grid">
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,true,
+'El enlace presenta un dominio engañoso. Aunque incluye defensa.gob.mx, el dominio real es seguridad-verificacion.net, lo que indica un intento de phishing sofisticado.')">
+Dominio real del enlace (URL engañosa)
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El remitente corresponde a una dirección institucional válida, lo que puede indicar que la cuenta fue comprometida.')">
+Remitente institucional
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El lenguaje es formal y coherente con procesos administrativos reales.')">
+Redacción del mensaje
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El contexto es creíble dentro de un entorno institucional.')">
+Contexto administrativo
+</div>
+
+</div>
+
+<div class="result-box">
+
+  <p class="feedback"></p>
+
+  <div class="action-buttons">
+    <button class="btn next-btn" onclick="next()" style="display:none">
+      Continuar
+    </button>
+
+    <button class="btn secondary retry-btn"
+      onclick="retryCase(this)"
+      style="display:none">
+      Reintentar caso
+    </button>
+  </div>
+
+</div>
+
+</section>
+
+<section class="slide">
+
+<h2 style="font-size:1.8rem;">
+Caso 6 — Solicitud interna de validación técnica
+</h2>
+
+<p style="opacity:.9;">
+Durante actividades de mantenimiento de sistemas, un elemento adscrito a una unidad de transmisiones recibe un correo electrónico proveniente aparentemente de la Sección Técnica, solicitando la validación de acceso a una plataforma interna.
+</p>
+
+<div class="email-preview">
+  <h3>📧 Nuevo mensaje</h3>
+
+  <p><strong>De:</strong> Sección Técnica — Sistemas de Comunicaciones</p>
+  <p><strong>Para:</strong> Personal de Transmisiones</p>
+  <p><strong>Asunto:</strong> Validación de acceso a sistema de comunicaciones</p>
+
+  <hr>
+
+  <p>
+    Como parte de las actividades de mantenimiento y verificación de los sistemas de comunicaciones, 
+    se solicita validar el acceso a la plataforma institucional.
+  </p>
+
+  <p>
+    Esta actividad forma parte de los procedimientos establecidos para garantizar el correcto 
+    funcionamiento de los sistemas bajo control técnico.
+  </p>
+
+  <p>
+    Acceda mediante el siguiente enlace institucional:
+  </p>
+
+  <p style="color:#00aaff;">
+    https://intranet.transmisiones.defensa.gob.mx/acceso
+  </p>
+
+  <p>
+    Una vez validado, no es necesario realizar ninguna acción adicional.
+  </p>
+
+  <p>
+    Sección Técnica<br>
+    Servicio de Transmisiones
+  </p>
+</div>
+
+<p style="margin-top:20px;">
+<strong>Planteamiento analítico:</strong><br>
+A partir del análisis del mensaje, determine cuál es el principal indicador de riesgo en este caso.
+</p>
+
+<div class="phishing-grid">
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,true,
+'El riesgo radica en que la solicitud implica ingreso de credenciales sin una justificación clara o proceso formal verificable, lo cual puede indicar uso indebido de un canal legítimo.')">
+Solicitud de acceso sin procedimiento verificable
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El dominio parece legítimo y corresponde a una infraestructura institucional.')">
+Dominio del enlace
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El remitente coincide con una estructura real del servicio.')">
+Remitente institucional
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El lenguaje es coherente con procedimientos técnicos reales.')">
+Redacción técnica del mensaje
+</div>
+
+</div>
+
+<div class="result-box">
+
+  <p class="feedback"></p>
+
+  <div class="action-buttons">
+    <button class="btn next-btn" onclick="next()" style="display:none">
+      Continuar
+    </button>
+
+    <button class="btn secondary retry-btn"
+      onclick="retryCase(this)"
+      style="display:none">
+      Reintentar caso
+    </button>
+  </div>
+
+</div>
+
+</section>
+<section class="slide">
+
+<h2 style="font-size:1.8rem;">
+Caso 7 — Solicitud interna entre personal operativo
+</h2>
+
+<p style="opacity:.9;">
+Durante actividades dentro de la unidad, un elemento recibe un correo electrónico de un compañero perteneciente a la misma sección, solicitando apoyo para verificar información dentro del sistema.
+</p>
+
+<div class="email-preview">
+  <h3>📧 Nuevo mensaje</h3>
+
+  <p><strong>De:</strong> Cabo Hernández (Sección de Sistemas)</p>
+  <p><strong>Para:</strong> Elemento asignado</p>
+  <p><strong>Asunto:</strong> Apoyo rápido con sistema</p>
+
+  <hr>
+
+  <p>
+    Buen día, necesito tu apoyo para validar unos accesos en el sistema de comunicaciones.
+  </p>
+
+  <p>
+    Estoy teniendo inconsistencias con mi usuario y me pidieron revisarlo.
+  </p>
+
+  <p>
+    ¿Puedes ingresar con tus credenciales y confirmar si el sistema está funcionando correctamente?
+  </p>
+
+  <p>
+    Solo es para descartar falla general.
+  </p>
+
+  <p>
+    Gracias, quedo atento.
+  </p>
+
+  <p>
+    Cabo Hernández<br>
+    Sección de Sistemas
+  </p>
+</div>
+
+<p style="margin-top:20px;">
+<strong>Planteamiento analítico:</strong><br>
+A partir del análisis del mensaje, determine cuál es el principal indicador de riesgo en este caso.
+</p>
+
+<div class="phishing-grid">
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,true,
+'Solicitar el uso de credenciales personales por parte de otro elemento constituye una violación directa de los principios de seguridad y control de acceso.')">
+Solicitud de uso de credenciales personales
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El remitente pertenece a la misma sección, lo que incrementa la confianza pero no elimina el riesgo.')">
+Remitente conocido
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'El lenguaje es informal, pero esto es común en comunicación interna.')">
+Lenguaje informal
+</div>
+
+<div class="phishing-card"
+onclick="evaluateAnswer(this,false,
+'La solicitud parece técnica, pero no sigue procedimientos formales.')">
+Contexto técnico
+</div>
+
+</div>
+
+<div class="result-box">
+
+  <p class="feedback"></p>
+
+  <div class="action-buttons">
+    <button class="btn next-btn" onclick="next()" style="display:none">
+      Continuar
+    </button>
+
+    <button class="btn secondary retry-btn"
+      onclick="retryCase(this)"
+      style="display:none">
+      Reintentar caso
+    </button>
+  </div>
+
+</div>
+
+</section>
+
+<section class="slide">
+
+<h2 style="font-size:1.8rem;">
+Criterios para la detección de amenazas en entornos institucionales
+</h2>
+
+<h2>1. Verificación de dominios y direcciones electrónicas</h2>
+
+<p style="opacity:.9;">
+La verificación de direcciones web es uno de los métodos más efectivos
+para detectar intentos de phishing en entornos institucionales.
+</p>
+<img src="img/criterios 11.png"
+     alt="Verificación de dominios phishing"
+     style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+<p>
+Los atacantes utilizan dominios engañosos que imitan a instituciones
+oficiales mediante variaciones mínimas, sustitución de caracteres
+o el uso de subdominios para aparentar legitimidad.
+</p>
+
+<h3>Aspectos clave a verificar:</h3>
+<ul>
+  <li>Dominio principal (ej. gob.mx, edu.mx)</li>
+  <li>Uso de subdominios engañosos</li>
+  <li>Variaciones en la escritura (ej. gob-mx, gobmx-secure)</li>
+  <li>Presencia de protocolos inseguros (http en lugar de https)</li>
+  <li>Coincidencia con la infraestructura oficial</li>
+</ul>
+
+<p>
+Ejemplo: "defensa.gob.mx.seguridad-login.net" aparenta ser legítimo,
+pero el dominio real es "seguridad-login.net", lo que indica un sitio fraudulento.
+</p>
+
+<h3>Recomendaciones:</h3>
+<ul>
+  <li>Leer la URL completa antes de interactuar</li>
+  <li>Evitar acceder desde enlaces en correos o mensajes</li>
+  <li>Ingresar manualmente la dirección en el navegador</li>
+  <li>Verificar certificados y seguridad del sitio</li>
+</ul>
+
+<p>
+⚠️ El dominio principal es el único elemento que determina la autenticidad
+del sitio.⚠️
+</p>
+
+<p>
+Una verificación adecuada reduce significativamente el riesgo de exposición
+a sitios maliciosos.
+</p>
+<div class="nav-container">
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</div>
+</section>
+
+<section class="slide">
+
+<div class="slide-content">
+
+<h2>2. Uso indebido de credenciales</h2>
+
+<p>
+Las credenciales de acceso constituyen un elemento crítico de seguridad
+y deben mantenerse bajo estricta confidencialidad en todo momento.
+</p>
+
+<img src="img/credenciales 11.png"
+     alt="Uso indebido de credenciales phishing"
+     style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+<p>
+Los atacantes emplean técnicas de phishing para obtener credenciales,
+suplantando plataformas institucionales o solicitando información de forma engañosa.
+</p>
+
+<h3>Aspectos clave a considerar:</h3>
+<ul>
+  <li>Las credenciales nunca deben compartirse por correo o mensajes</li>
+  <li>Ninguna institución solicita contraseñas fuera de sus plataformas oficiales</li>
+  <li>Los formularios falsos pueden simular páginas legítimas</li>
+  <li>El ingreso en sitios no verificados compromete el acceso completo</li>
+</ul>
+
+<p>
+El uso indebido de credenciales permite a los atacantes acceder a sistemas,
+robar información o realizar acciones en nombre del usuario.
+</p>
+
+<h3>Recomendaciones:</h3>
+<ul>
+  <li>Ingresar credenciales solo en sitios oficiales verificados</li>
+  <li>No reutilizar contraseñas en diferentes servicios</li>
+  <li>Activar mecanismos de autenticación adicional (2FA)</li>
+  <li>Cerrar sesión en dispositivos compartidos</li>
+</ul>
+
+<p>
+⚠️ Compartir o ingresar credenciales en sitios no confiables puede comprometer
+completamente la seguridad institucional.⚠️
+</p>
+
+<p>
+La protección de credenciales es una de las principales defensas contra el phishing.
+</p>
+
+<button class="btn secondary" onclick="prev()">Anterior</button>
+<button class="btn" onclick="next()">Siguiente</button>
+
+</section>
+
+<section class="slide">
+
+<div class="slide-content">
+
+<h2>3. Manejo de archivos adjuntos</h2>
+
+<p>
+Los archivos adjuntos representan uno de los vectores más comunes
+de ataque en campañas de phishing, utilizados para distribuir malware.
+</p>
+
+<p>
+Archivos comprimidos, documentos con macros o ejecutables pueden
+contener código malicioso diseñado para infectar el sistema.
+</p>
+
+<p>
+Los atacantes suelen disfrazar estos archivos como documentos legítimos
+(facturas, reportes o notificaciones) para engañar al usuario.
+</p>
+
+<h3>Aspectos clave a identificar:</h3>
+<ul>
+  <li>Archivos inesperados o no solicitados</li>
+  <li>Extensiones sospechosas (.exe, .zip, .js, .html)</li>
+  <li>Documentos que solicitan habilitar macros</li>
+  <li>Nombres engañosos o urgentes</li>
+</ul>
+<img src="img/manejo de doc.png"
+     alt="Manejo de archivos adjuntos"
+     style="width:45%;display:block;margin:25px auto;border-radius:12px">
+<p>
+La apertura de estos archivos sin verificación puede ejecutar malware,
+permitiendo el acceso no autorizado al sistema o el robo de información.
+</p>
+
+<h3>Recomendaciones:</h3>
+<ul>
+  <li>No abrir archivos de remitentes desconocidos</li>
+  <li>Verificar el origen antes de descargar o ejecutar</li>
+  <li>Evitar habilitar macros en documentos sospechosos</li>
+  <li>Utilizar herramientas de seguridad para analizar archivos</li>
+</ul>
+
+<p>
+⚠️ Un solo archivo malicioso puede comprometer completamente el
+ sistema institucional.⚠️
+</p>
+
+<p>
+La verificación previa es esencial antes de interactuar con cualquier archivo adjunto.
+</p>
+
+</div>
+
+<div class="nav-container">
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</div>
+
+</section>
+
+<section class="slide">
+
+<div class="slide-content">
+
+<h2>4. Uso de autoridad y jerarquía</h2>
+
+<p>
+Los atacantes utilizan figuras de autoridad o jerarquía para generar presión
+y aumentar la probabilidad de que el usuario obedezca sin cuestionar.
+</p>
+
+<p>
+Estos mensajes pueden aparentar provenir de superiores, áreas administrativas
+o entidades oficiales, aprovechando la confianza en estructuras institucionales.
+</p>
+
+<img src="img/autoridad y jerrr.png"
+     alt="Uso de autoridad y jerarquía"
+     style="width:45%;display:block;margin:25px auto;border-radius:12px">
+     
+<p>
+La percepción de autoridad puede reducir el análisis crítico y provocar
+acciones inmediatas sin verificación.
+</p>
+
+<h3>Aspectos clave a identificar:</h3>
+<ul>
+  <li>Mensajes que aparentan provenir de superiores o directivos</li>
+  <li>Solicitudes inusuales fuera de procedimientos establecidos</li>
+  <li>Uso de tono formal combinado con urgencia</li>
+  <li>Instrucciones que evitan procesos de validación</li>
+</ul>
+
+<p>
+El nivel jerárquico del remitente no garantiza la legitimidad del mensaje.
+</p>
+
+<h3>Recomendaciones:</h3>
+<ul>
+  <li>Verificar la identidad del remitente por medios oficiales</li>
+  <li>No ejecutar solicitudes fuera de protocolos institucionales</li>
+  <li>Confirmar directamente con la persona o área correspondiente</li>
+  <li>Mantener procedimientos de validación en todo momento</li>
+</ul>
+
+<p>
+⚠️ La autoridad es una técnica de ingeniería social 
+utilizada para manipular decisiones.⚠️
+</p>
+
+<p>
+Toda solicitud debe ser evaluada, independientemente del nivel jerárquico.
+</p>
+</div>
+
+<div class="nav-container">
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</div>
+
+</div>
+</section>
+<section class="slide">
+
+<div class="slide-content">
+
+<h2>5. Cumplimiento de procedimientos formales</h2>
+
+<p>
+Toda actividad institucional se rige por procedimientos establecidos que
+garantizan la seguridad, trazabilidad y control de la información.
+</p>
+
+<p>
+Cualquier solicitud que se desvíe de los protocolos definidos debe considerarse
+una anomalía operativa, independientemente de su apariencia de legitimidad.
+</p>
+
+<p>
+En contextos de seguridad, los atacantes intentan evadir controles formales
+mediante instrucciones directas, urgentes o fuera de los canales autorizados.
+</p>
+
+<img src="img/fromales.png"
+     alt="Cumplimiento de procedimientos formales"
+     style="width:45%;display:block;margin:25px auto;border-radius:12px">
+
+<h3>Aspectos clave a identificar:</h3>
+<ul>
+  <li>Solicitudes fuera de los canales oficiales establecidos</li>
+  <li>Instrucciones que omiten procesos de validación o autorización</li>
+  <li>Peticiones no alineadas con funciones o responsabilidades del usuario</li>
+  <li>Acciones solicitadas sin respaldo documental o procedimental</li>
+</ul>
+
+<p>
+El incumplimiento de procedimientos puede comprometer la integridad de los sistemas
+y facilitar accesos no autorizados.
+</p>
+
+<h3>Recomendaciones:</h3>
+<ul>
+  <li>Seguir estrictamente los protocolos institucionales</li>
+  <li>Validar cualquier solicitud fuera de procedimiento por canales oficiales</li>
+  <li>No ejecutar acciones sin autorización conforme a la cadena de mando</li>
+  <li>Reportar desviaciones o irregularidades operativas</li>
+</ul>
+
+<p>
+⚠️ En entornos institucionales, toda desviación de procedimiento debe considerarse
+un posible incidente de seguridad.⚠️
+</p>
+
+<div class="nav-container">
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</div>
+
+</section>
+<section class="slide">
+
+<div class="slide-content">
+
+<h2>6. Evaluación del contexto y comportamiento</h2>
+
+<p>
+El análisis del contexto operativo permite identificar amenazas que no presentan
+indicadores evidentes, mediante la evaluación del entorno, la intención y el comportamiento.
+</p>
+
+<p>
+En entornos institucionales, toda solicitud debe ser analizada en función del rol,
+las responsabilidades y los procedimientos establecidos dentro de la organización.
+</p>
+
+<img src="img/punto 6.png"
+     alt="Evaluación del contexto y comportamiento"
+     style="width:45%;display:block;margin:25px auto;border-radius:12px">
+<p>
+Las operaciones legítimas siguen patrones definidos; cualquier desviación puede indicar
+un intento de manipulación o una anomalía de seguridad.
+</p>
+
+<h3>Aspectos clave a identificar:</h3>
+<ul>
+  <li>Coherencia de la solicitud con el rol y funciones del usuario</li>
+  <li>Correspondencia con procedimientos y protocolos establecidos</li>
+  <li>Consistencia del comportamiento del remitente</li>
+  <li>Presencia de desviaciones operativas o solicitudes inusuales</li>
+</ul>
+
+<p>
+El análisis contextual permite detectar amenazas avanzadas que no dependen únicamente
+de indicadores técnicos visibles.
+</p>
+
+<h3>Recomendaciones:</h3>
+<ul>
+  <li>Evaluar siempre la solicitud dentro del contexto operativo</li>
+  <li>No ejecutar acciones que no correspondan al rol asignado</li>
+  <li>Validar cualquier instrucción fuera del comportamiento habitual</li>
+  <li>Aplicar criterio operativo antes de actuar</li>
+</ul>
+
+<p>
+⚠️ En entornos de seguridad, las inconsistencias de comportamiento son indicadores
+críticos de posibles intentos de ingeniería social.
+</p>
+
+<div class="nav-container">
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</div>
+
+</div>
+</section>
+
+<section class="slide">
+
+<h2 style="text-align:center; font-size:2rem;">
+Síntesis del aprendizaje adquirido
+</h2>
+
+<p>
+A lo largo del proceso formativo, el usuario desarrolló competencias orientadas
+a la comprensión integral del phishing como una técnica de ingeniería social,
+así como la identificación de sus principales mecanismos de ejecución.
+</p>
+
+<img src="img/sintesis.png"
+     alt="Síntesiss de phishing"
+     style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+<p>
+El análisis de escenarios permitió reconocer patrones de ataque,
+evaluar riesgos y aplicar criterios de seguridad en contextos digitales
+e institucionales.
+</p>
+
+<h3>Competencias desarrolladas:</h3>
+<ul>
+  <li>Identificación de señales de alerta en mensajes y correos electrónicos</li>
+  <li>Análisis de enlaces, dominios y archivos sospechosos</li>
+  <li>Evaluación de riesgos en función del contexto operativo</li>
+  <li>Aplicación de criterios de seguridad en la toma de decisiones</li>
+</ul>
+
+<p>
+El aprendizaje adquirido fortalece la capacidad del usuario para actuar
+de manera preventiva y reducir la probabilidad de comprometer información
+o sistemas institucionales.
+</p>
+
+<p>
+La correcta interpretación de señales y el análisis del contexto son
+fundamentales para la detección de amenazas.
+</p>
+
+<div class="nav-container">
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</div>
+</section>
+
+<section class="slide">
+
+<h2 style="text-align:center; font-size:2rem;">
+Conclusión general del proceso formativo
+</h2>
+
+<p>
+El desarrollo de la presente guía interactiva permitió establecer un proceso formativo
+progresivo orientado a la identificación, análisis y prevención de ataques de phishing
+en entornos digitales e institucionales.
+</p>
+
+<img src="img/conclusion el bueno.png"
+     alt="Conclusión general del proceso formativo"
+     style="width:55%;display:block;margin:25px auto;border-radius:12px">
+
+<p>
+A través de la integración de conceptos teóricos, análisis de casos y simulación
+de escenarios, se fortaleció la capacidad del usuario para reconocer amenazas
+y tomar decisiones frente a estos ataques de phishing.
+</p>
+
+<h3>Enfoque metodológico aplicado:</h3>
+<ul>
+  <li>Aprendizaje progresivo basado en niveles</li>
+  <li>Integración de teoría y práctica</li>
+  <li>Análisis de escenarios simulados</li>
+  <li>Desarrollo de pensamiento crítico</li>
+</ul>
+
+<p>
+Este enfoque permitió no solo la adquisición de conocimientos teóricos,
+sino también el desarrollo de habilidades prácticas para la toma de decisiones
+en contextos reales.
+</p>
+
+<p>
+La formación en ciberseguridad requiere práctica constante y aplicación
+de criterios en situaciones reales.
+</p>
+
+<div class="nav-container">
+  <button class="btn secondary" onclick="prev()">Anterior</button>
+  <button class="btn" onclick="next()">Siguiente</button>
+</div>
+</section>
+
+<section class="slide" id="finalScreen">
+
+  <h2 style="text-align:center; font-size:2rem;">
+    🏆 Finalización de la guía🏆
+  </h2>
+
+  <p style="text-align:center; font-size:1.1rem;">
+   🎉¡Felicidades! Has completado exitosamente la guía interactiva sobre la identificación,
+    análisis y prevención de ataques de phishing.🎉
+  </p>
+
+<h3>Resultado general</h3>
+
+<p>
+<strong>Nivel alcanzado:</strong> <span id="finalLevel">-</span>
+</p>
+<p>
+El conocimiento adquirido permite al usuario reconocer patrones de ataque
+y actuar de manera preventiva ante posibles amenazas.
+</p>
+
+<h3>Competencias desarrolladas</h3>
+
+<ul>
+  <li>✔ Identificación de señales de phishing</li>
+  <li>✔ Análisis de correos y enlaces sospechosos</li>
+  <li>✔ Evaluación de riesgos digitales</li>
+  <li>✔ Aplicación de criterios de seguridad institucional</li>
+</ul>
+
+<p>
+ La ciberseguridad no depende únicamente de herramientas tecnológicas,
+sino del criterio y la capacidad de análisis del usuario.
+</p>
+
+  <div style="text-align:center; margin-top:30px;">
+    <button class="btn" onclick="location.reload()">
+      🔄 Reiniciar guía
+    </button>
+  </div>
+
+</section>
+
+
+</main>
+
+
+<script>
+  const DEV_MODE = true;
+
+  // 📍 Slide exacta del mapa interactivo de Conceptos
+const conceptMapIndex = 7;
+
+/* ==============================
+   REFERENCIAS BASE
+   ============================== */
+const slides = document.querySelectorAll('.slide');
+const menuBtns = document.querySelectorAll('.menu-btn');
+console.log(slides.length);
+
+let index = 0;
+let globalScore = 0;
+let globalQuestions = 0;
+let score = 0;
+let level = 1;// 1 = Básico, 2 = Intermedio, 3 = Avanzado
+let flags = 0;
+let detected = {};
+let risk = 0;
+let currentModule = 'intro';
+globalQuestions += score;
+
+/* ==============================
+   MAPA ÚNICO DE MÓDULOS (FUENTE DE VERDAD)
+   ============================== */
+const modules = {
+  intro:      { start: 0, end: 2, menu: 0 },
+  phishing:   { start: 3, end: 5, menu: 1 },
+  conceptos:  { start: 6, end: 13, menu: 2 },
+ tipos:       { start: 14, end: 20, menu: 3 },
+  señales:    { start: 21, end: 27, menu: 4 },
+  evaluacion: { start: 28, end: 39, menu: 5 },
+  nivel2:     { start: 40, end: 40, menu: 6 },
+  n2_contexto: { start: 41, end: 41, menu: 7 },
+ mensaje:    { start: 42, end: 42, menu: 8 },
+ analisis:   { start: 43, end: 43, menu: 9 },
+ riesgo:     { start: 44, end: 44, menu: 10 },
+ proceso:     { start: 45, end: 45, menu: 11 },
+ registro:   { start: 46, end: 46, menu: 12 },
+ conclusion: { start: 47, end: 47, menu: 13 },
+  nivel3:     { start: 48, end: 48, menu: 14 },
+  caso1:      { start: 49, end: 49, menu: 15 },
+  caso2:      { start: 50, end: 50, menu: 16 },
+  caso3:      { start: 51, end: 51, menu: 17 },
+  caso4:      { start: 52, end: 52, menu: 18 },
+  caso5:      { start: 53, end: 53, menu: 19 },
+  caso6:      { start: 54, end: 54, menu: 20 },
+  caso7:      { start: 55, end: 55, menu: 21 },
+  criterios:  { start: 56, end: 61, menu: 22 },
+  conclusion_final: { start: 62, end: 66, menu: 23 },
+
+  
+};
+const unlockMap = {
+  intro: "phishing",
+  phishing: "conceptos",
+  conceptos: "tipos",
+  tipos: "señales",
+  señales: "evaluacion",
+  evaluacion: "nivel2"
+};
+
+
+// === RANGOS DE MÓDULOS ===
+const introRange = { start: 0, end: 2 };
+const conceptRange = { start: 5, end: 6 };
+// ajusta si agregas más slides
+
+
+/* ==============================
+   SINCRONIZAR SLIDE ACTIVA REAL
+   ============================== */
+slides.forEach((s, i) => {
+  if (s.classList.contains('active')) index = i;
+});
+/* ==============================
+   MOSTRAR SLIDE (CONTROL CENTRAL)
+   ============================== */
+function show(i){
+
+  console.log("slide actual:", i);
+
+  if(i < 0 || i >= slides.length) return;
+
+  slides[index].classList.remove('active');
+  index = i;
+  slides[index].classList.add('active');
+
+  // detectar módulo actual
+  for(const key in modules){
+    const m = modules[key];
+    if(index >= m.start && index <= m.end){
+      currentModule = key;
+      menuBtns.forEach(b => b.classList.remove('active'));
+      if(menuBtns[m.menu]) menuBtns[m.menu].classList.add('active');
+      break;
+    }
+  }
+  update();
+   const current = currentModule;
+
+  if(modules[current] && i === modules[current].end){
+    unlockNextModule(current);
+  }
+
+  // Puntaje final 
+  if(i === slides.length - 1){
+    const maxPossible = totalQuestions + 7;
+    const rawScore = Math.min(globalScore, maxPossible);
+    const finalScore = Math.round((rawScore / maxPossible) * 100);
+    const elScore = document.getElementById("finalScore");
+    if(elScore) elScore.innerText = finalScore + " / 100";
+    let levelText;
+    if(finalScore >= 80) levelText = "🏅 Avanzado 🏅";
+    else if(finalScore >= 50) levelText = "📊 Intermedio 📊";
+    else levelText = "📘 Básico 📘";
+    const elLevel = document.getElementById("finalLevel");
+    if(elLevel) elLevel.innerText = levelText;
+  }
+}
+
+function unlockNextModule(current){
+
+  const next = unlockMap[current];
+
+  if(!next) return;
+
+  const btn = document.querySelector(
+    `[onclick="goToModule('${next}')"]`
+  );
+
+  if(btn){
+    btn.classList.remove("locked");
+  }
+}
+/* ==============================
+   NAVEGACIÓN GENERAL (SEGURA)
+   ============================== */
+function next(){
+  const m = modules[currentModule];
+
+  if(index < m.end){
+    show(index + 1);
+    return;
+  }
+
+  if(index === m.end){
+
+    if(currentModule === "caso7"){
+      unlockCriterios();
+    }
+
+    if(currentModule === "criterios"){
+      unlockConclusion();
+    }
+  }
+
+  // cambiar módulo después de evaluar
+  const keys = Object.keys(modules);
+  const currentPos = keys.indexOf(currentModule);
+
+  if(currentPos !== -1 && currentPos < keys.length - 1){
+    const nextModule = keys[currentPos + 1];
+    goToModule(nextModule);
+  }
+}
+
+
+function prev(){
+  if(index > 0){
+    show(index - 1);
+  }
+
+}
+
+/* ==============================
+   MENÚ LATERAL
+   ============================== */
+function goToModule(name){
+
+  const btn = document.querySelector(
+    `[onclick="goToModule('${name}')"]`
+  );
+
+  if(btn && btn.classList.contains("locked")){
+    alert("🔒 Debes completar el módulo anterior");
+    return;
+  }
+
+  if(name === "nivel2" && !DEV_MODE){
+    const btn2 = document.getElementById("menuNivel2");
+    if(btn2.classList.contains("locked")) return;
+  }
+
+  if(name === "criterios"){
+    const btn3 = document.getElementById("menuCriterios");
+    if(btn3.classList.contains("locked")) return;
+  }
+
+  if(modules[name]){
+    currentModule = name;
+    show(modules[name].start);
+  }
+}
+
+/* ==============================
+   INTRODUCCIÓN
+   ============================== */
+function nextIntro(){
+  next();
+}
+
+function goToNextModule(){
+  goToModule('phishing');
+}
+
+/* ==============================
+   PHISHING
+   ============================== */
+function nextPhishing(){
+  next();
+}
+
+function prevPhishing(){
+  prev();
+}
+
+function goToConceptos(){
+  goToModule('conceptos');
+}
+function goBackToConceptMap(){
+  show(conceptMapIndex);
+}
+
+
+/* ==============================
+   CONCEPTOS
+   ============================== */
+function nextConceptos(){
+  next();
+}
+
+function prevConceptos(){
+  prev();
+}
+
+function goToConceptDetail(i){
+  show(i);
+}
+
+/* ==============================
+   TIPOS
+   ============================== */
+function goToTipos(){
+  goToModule('tipos');
+}
+/* ==============================
+   MÉTRICAS
+   ============================== */
+function update(){
+
+  document.getElementById('metricScore').innerText =
+    'Puntaje: ' + score;
+
+  document.getElementById('metricLevel').innerText =
+    'Nivel: ' + (level === 1 ? 'Básico' : 'Intermedio');
+
+  const m = modules[currentModule];
+
+  const progress =
+    ((index - m.start + 1) / (m.end - m.start + 1)) * 100;
+
+  document.getElementById('metricProgress').innerText =
+    'Progreso: ' + Math.round(progress) + '%';
+
+  document.querySelectorAll('.progress-bar').forEach(b =>
+    b.style.width = progress + '%'
+  );
+}
+const tiposIndex = 14;
+
+function goToPhishingDetail(i){
+  show(i);
+}
+
+function goBackToTipos(){
+  show(tiposIndex);
+}
+
+let totalQuestions = 10;
+let passingScore = 8;
+
+
+/* ==============================
+   sistema de evaluacion
+   ============================== */
+
+function evaluateAnswer(card, isCorrect, explanation){
+  const slide = card.closest('.slide');
+  const feedback = slide.querySelector('.feedback');
+  const btn = slide.querySelector('.next-btn');
+  const retryBtn = slide.querySelector('.retry-btn');
+
+  if(isCorrect){
+    score++;
+    globalScore++;
+    updateLevel();
+    card.style.border = '2px solid #4caf50';
+    feedback.style.color = '#4caf50';
+    feedback.innerHTML = `
+      <strong>✔ Respuesta correcta</strong><br><br>
+      ${explanation}<br><br>
+      Esta decisión reduce el riesgo de caer en un ataque de phishing
+      y demuestra un análisis adecuado de la situación.
+    `;
+  } else {
+    card.style.border = '2px solid #f44336';
+    feedback.style.color = '#f44336';
+    feedback.innerHTML = `
+      <strong>✖ Respuesta incorrecta</strong><br><br>
+      ${explanation}<br><br>
+      'Esta decisión es común cuando el usuario confía en la apariencia del mensaje.
+Los atacantes diseñan correos profesionales para evitar sospechas.
+En un entorno real, esta acción podría resultar en el robo inmediato de credenciales.'
+
+    `;
+  }
+
+  btn.style.display = 'inline-block';
+  retryBtn.style.display = 'inline-block';
+
+  slide.querySelectorAll('.phishing-card')
+       .forEach(c => c.onclick = null);
+
+  const finalScore = document.getElementById('finalScore');
+  if(finalScore){
+    finalScore.innerText = `Puntaje actual: ${score} / ${totalQuestions}`;
+  }
+
+  updateLevel();
+}
+
+/* ==============================
+   logica de aprovacion 
+   ============================== */
+function checkEvaluationResult(){
+  const msg = document.getElementById('finalMessage');
+  const retryBtn = document.getElementById('retryBtn');
+  const nextBtn = document.getElementById('nextLevelBtn');
+  
+
+  if(score >= passingScore){
+    msg.innerHTML = `
+      <strong>🎉 ¡Felicidades!</strong><br><br>
+      Obtuviste ${score} respuestas correctas de ${totalQuestions}.<br>
+      Has demostrado una comprensión sólida de los ataques de phishing
+      y puedes avanzar al siguiente nivel.
+    `;
+    retryBtn.style.display = 'none';
+    nextBtn.style.display = 'inline-block';
+   
+// SOLO desbloquear nivel 2
+ const nivel2Btn = document.getElementById('menuNivel2');
+  nivel2Btn.classList.remove('locked');
+
+  unlockNivel2Full(); // 🔥 AQUÍ
+// desbloquear nivel 3 al terminar nivel 2
+if(currentModule === "n2_conclusion" && index === modules.n2_conclusion.end){
+  unlockMenu("menuNivel3", "📘 Nivel 3 — Aplicación del conocimiento");
+}
+  } else {
+    msg.innerHTML = `
+      <strong>⚠ Evaluación no aprobada</strong><br><br>
+      Obtuviste ${score} respuestas correctas de ${totalQuestions}.<br>
+      Para avanzar, necesitas al menos ${passingScore}.<br><br>
+      Repetir la evaluación te ayudará a reforzar los conceptos
+      y mejorar tu capacidad de detección.
+    `;
+    retryBtn.style.display = 'inline-block';
+    nextBtn.style.display = 'none';
+  }
+}
+/* ==============================
+   repetir evaluacion
+   ============================== */
+function repeatEvaluation(){
+  score = 0;
+
+  // limpiar estilos y feedback
+  document.querySelectorAll('.phishing-card').forEach(card => {
+    card.style.border = '';;
+  });
+
+  document.querySelectorAll('.feedback').forEach(f => f.innerHTML = '');
+  document.querySelectorAll('.next-btn').forEach(b => b.style.display = 'none');
+
+  restoreEvaluationHandlers(); // 🔥 CLAVE
+
+  goToModule('evaluacion');
+  update();
+}
+
+/* ==============================
+   reactivar preguntas 
+   ============================== */
+
+function restoreEvaluationHandlers(){
+  document.querySelectorAll('.phishing-card').forEach(card => {
+    const handler = card.getAttribute('onclick');
+    if(handler){
+      card.onclick = function(){
+        eval(handler);
+      };
+    }
+  });
+}
+function goToNextLevel(){
+
+level = 2;
+detected = {};
+flags = 0;
+risk = 0;
+
+const unlock = document.getElementById("levelUnlock");
+
+/* mostrar animación */
+unlock.style.display = "flex";
+unlock.classList.add("show");
+
+setTimeout(()=>{
+
+/* ocultar animación */
+unlock.classList.remove("show");
+unlock.style.display = "none";
+
+/* desbloquear botón del menú */
+const nivel2Btn = document.getElementById("menuNivel2");
+nivel2Btn.classList.remove("locked");
+nivel2Btn.innerText = "📘 Nivel 2 — Análisis guiado";
+
+/* ir al módulo nivel 2 usando el sistema de módulos */
+show(modules.nivel2.start);
+
+},2000);
+
+}
+function unlockNivel2Full(){
+
+  const subMenus = [
+    "menuN2_1",
+    "menuN2_2",
+    "menuN2_3",
+    "menuN2_4",
+    "menuN2_5",
+    "menuN2_6",
+    "menuN2_7"
+  ];
+
+  const names = [
+    " Contexto",
+    " Mensaje",
+    " Análisis",
+    " Evaluación",
+    " Procedimiento",
+    " Registro",
+    " Conclusión"
+  ];
+
+  subMenus.forEach((id, i)=>{
+    const btn = document.getElementById(id);
+
+    if(btn){
+
+      // 🔥 quitar bloqueo REAL
+      btn.classList.remove("locked");
+
+      // 🔥 forzar estilo visual
+      btn.style.opacity = "1";
+      btn.style.pointerEvents = "auto";
+      btn.style.cursor = "pointer";
+
+      btn.innerText = names[i];
+    }
+  });
+
+}
+function unlockNivel3Full(){
+
+  const casos = [
+    { id: "menuCaso1", text: "Caso 1 — Análisis de correo sospechoso" },
+    { id: "menuCaso2", text: "Caso 2 — Ingeniería social" },
+    { id: "menuCaso3", text: "Caso 3 — Enlace malicioso" },
+    { id: "menuCaso4", text: "Caso 4 — Acceso no autorizado" },
+    { id: "menuCaso5", text: "Caso 5 — Suplantación interna" },
+    { id: "menuCaso6", text: "Caso 6 — Sistema comprometido" },
+    { id: "menuCaso7", text: "Caso 7 — Ataque avanzado" }
+  ];
+
+  casos.forEach(caso => {
+    const btn = document.getElementById(caso.id);
+
+    if(btn){
+      btn.classList.remove("locked");
+
+      // 🔥 ESTO ES LO QUE TE FALTABA
+      btn.innerText = caso.text;
+
+      btn.style.pointerEvents = "auto";
+      btn.style.opacity = "1";
+    }
+  });
+
+}
+
+function analyze(type){
+
+detected[type] = true;
+flags++;
+
+document.getElementById("flags").innerText = flags;
+
+// marcar visualmente el elemento
+event.target.classList.add("detected");
+
+const feedback = document.getElementById("analysisFeedback");
+
+if(type === "remitente"){
+feedback.innerHTML =
+"⚠ El dominio del remitente no coincide con el banco oficial. Los atacantes utilizan dominios similares para generar confianza.";
+}
+
+if(type === "asunto"){
+feedback.innerHTML =
+"⚠ El asunto intenta generar preocupación inmediata para provocar una reacción impulsiva.";
+}
+
+if(type === "urgencia"){
+feedback.innerHTML =
+"⚠ La presión temporal es una técnica clásica de ingeniería social.";
+}
+
+if(type === "link"){
+feedback.innerHTML =
+"🚨 Este enlace no pertenece al dominio oficial del banco. Es el indicador más claro de phishing.";
+}
+
+updateRisk();
+}
+function updateRisk(){
+
+risk = flags * 25;
+
+const bar = document.getElementById("riskFill");
+
+bar.style.width = risk + "%";
+
+}
+function finishAnalysis(){
+
+const feedback = document.getElementById("analysisFeedback");
+
+if(flags === 4){
+
+feedback.innerHTML = `
+<strong style="color:#4caf50">
+Diagnóstico del análisis: Excelente
+</strong><br><br>
+Identificaste todos los indicadores principales de phishing.
+Tu capacidad de análisis es adecuada para detectar intentos
+de fraude digital.
+`;
+
+}
+
+else if(flags >= 3){
+
+feedback.innerHTML = `
+<strong style="color:#ffcc00">
+Diagnóstico del análisis: Aceptable
+</strong><br><br>
+Detectaste la mayoría de las señales de riesgo.
+Sin embargo, algunos indicadores podrían pasar desapercibidos.
+`;
+
+}
+
+else{
+
+feedback.innerHTML = `
+<strong style="color:#e74c3c">
+Diagnóstico del análisis: Insuficiente
+</strong><br><br>
+No se identificaron suficientes señales de phishing.
+En un escenario real este mensaje podría engañar al usuario.
+`;
+
+}
+unlock.style.display = "flex";
+unlock.classList.add("show");
+
+}
+function markIndicator(el){
+el.classList.toggle("selected");
+}
+document.addEventListener("keydown", function(e){
+
+if(e.key === "F2"){
+
+const panel = document.getElementById("devPanel");
+
+panel.style.display =
+panel.style.display === "none" ? "block" : "none";
+
+}
+
+});
+let indicators = 0;
+const totalIndicators = 5;
+
+function analyzeElement(el){
+
+if(el.classList.contains("checked")) return;
+
+el.classList.add("checked");
+
+const isCorrect = el.dataset.correct === "true";
+const info = el.dataset.info;
+
+const explain = document.getElementById("analysisExplain");
+
+if(isCorrect){
+
+el.classList.add("correct");
+
+indicators++;
+
+document.getElementById("indicatorCount").innerText = indicators;
+
+updateRiskLevel();
+
+explain.innerText = info;
+
+}else{
+
+el.classList.add("incorrect");
+
+explain.innerText = info;
+
+}
+
+}
+
+function updateRiskLevel(){
+
+const risk = document.getElementById("riskLevel");
+const bar = document.getElementById("riskFill");
+
+const percentage = (indicators / totalIndicators) * 100;
+
+bar.style.width = percentage + "%";
+
+if(indicators === 0){
+
+risk.innerText = "Sin evaluar";
+risk.style.color = "#ccc";
+
+}
+
+else if(indicators <= 2){
+
+risk.innerText = "Riesgo moderado";
+risk.style.color = "orange";
+
+}
+
+else{
+
+risk.innerText = "Riesgo alto";
+risk.style.color = "red";
+
+}
+// NIVEL 2 PROGRESIVO
+if(currentModule === "n2_contexto"){
+  unlockMenu("menuN2_2", " Mensaje");
+}
+
+if(currentModule === "mensaje"){
+  unlockMenu("menuN2_3", " Análisis");
+}
+
+if(currentModule === "analisis"){
+  unlockMenu("menuN2_4", " Evaluación");
+}
+
+if(currentModule === "riesgo"){
+  unlockMenu("menuN2_5", " Procedimiento");
+}
+
+if(currentModule === "proceso"){
+  unlockMenu("menuN2_6", " Registro");
+}
+
+if(currentModule === "registro"){
+  unlockMenu("menuN2_7", " Conclusión");
+}
+function unlockMenu(id, text){
+  const btn = document.getElementById(id);
+
+  if(btn){
+    btn.classList.remove("locked");
+
+    // 🔥 quitar candado del texto
+    btn.innerText = text;
+
+    btn.style.pointerEvents = "auto";
+    btn.style.opacity = "1";
+  }
+}
+
+// resaltar subniveles nivel 2
+if(currentModule === "nivel2"){
+  const map = [
+    "menuN2_1","menuN2_2","menuN2_3",
+    "menuN2_4","menuN2_5","menuN2_6","menuN2_7"
+  ];
+
+  map.forEach(id=>{
+    const btn = document.getElementById(id);
+    if(btn) btn.classList.remove("active");
+  });
+
+  const step = getNivel2Step(index) - 1;
+
+  if(map[step]){
+    document.getElementById(map[step]).classList.add("active");
+  }
+}
+
+}
+function goToNextModuleNivel2(){
+
+  showNivel3Unlock();
+
+  const nivel3Btn = document.getElementById("menuNivel3");
+  nivel3Btn.classList.remove("locked");
+  nivel3Btn.innerText = "📘 Nivel 3 — Aplicación del conocimiento";
+
+  unlockNivel3Full();
+  unlockCriterios();
+
+  goToModule("nivel3");
+
+}
+function retryCase(button){
+
+  const slide = button.closest('.slide');
+
+  // limpiar estilos de opciones
+  slide.querySelectorAll('.phishing-card').forEach(card=>{
+    card.style.border = '';
+    
+    // restaurar onclick
+    const handler = card.getAttribute('onclick');
+    if(handler){
+      card.onclick = function(){
+        eval(handler);
+      };
+    }
+  });
+
+  // limpiar feedback
+  slide.querySelector('.feedback').innerHTML = '';
+
+  // ocultar botones
+  slide.querySelector('.next-btn').style.display = 'none';
+  slide.querySelector('.retry-btn').style.display = 'none';
+
+}
+function unlockCriterios(){
+  const btn = document.getElementById("menuCriterios");
+
+  if(btn){
+    btn.classList.remove("locked");
+
+    // 🔥 quitar candado visual
+    btn.innerText = "Criterios de detección";
+
+    btn.style.pointerEvents = "auto";
+    btn.style.opacity = "1";
+  }
+}
+function unlockConclusion(){
+  const btn = document.getElementById("menuConclusion");
+
+  if(btn){
+    btn.classList.remove("locked");
+
+    // 🔥 quitar candado visual
+    btn.innerText = "Conclusión final";
+
+    btn.style.pointerEvents = "auto";
+    btn.style.opacity = "1";
+  }
+}
+
+function unlockAndGo(module){
+  goToModule(module);
+}
+function updateLevel(){
+
+  if(score >= 9){
+    level = 3;
+  }
+  else if(score >= 7){
+    level = 2;
+  }
+  else{
+    level = 1;
+  }
+
+}
+function showFinalScreen(){
+  const maxPossible = totalQuestions + 7;
+  const rawScore = Math.min(globalScore, maxPossible);
+  const finalScore = Math.round((rawScore / maxPossible) * 100);
+
+  const el = document.getElementById("finalScore");
+  if(el) el.innerText = finalScore + " / 100";
+
+  let levelText;
+  if(finalScore >= 80) levelText = "🏅 Avanzado";
+  else if(finalScore >= 50) levelText = "📊 Intermedio";
+  else levelText = "📘 Básico";
+
+  const lv = document.getElementById("finalLevel");
+  if(lv) lv.innerText = levelText;
+
+  show(slides.length - 1);
+}
+function showNivel3Unlock(){
+
+  const unlock = document.getElementById("level3Unlock");
+
+  // mostrar animación
+  unlock.style.display = "flex";
+  unlock.classList.add("show");
+
+  setTimeout(()=>{
+
+    // ocultar animación
+    unlock.classList.remove("show");
+    unlock.style.display = "none";
+
+    // desbloquear botón
+    const nivel3Btn = document.getElementById("menuNivel3");
+
+    nivel3Btn.classList.remove("locked");
+    nivel3Btn.innerText = "📘 Nivel 3 — Aplicación del conocimiento";
+    nivel3Btn.style.pointerEvents = "auto";
+    nivel3Btn.style.opacity = "1";
+
+    // desbloquear casos
+    unlockNivel3Full();
+
+    // ir automáticamente al nivel 3
+    goToModule("nivel3");
+
+  },2000);
+}
+function resetApp() {
+
+  // Reiniciar variables
+  score = 0;
+  detected = 0;
+  level = 1;
+
+  // Reset visuales 
+  document.getElementById("indicatorCount").innerText = 0;
+  document.getElementById("riskFill").style.width = "0%";
+  document.getElementById("riskLevel").innerText = "Sin evaluar";
+
+  // Quitar selección
+  document.querySelectorAll(".phish-element").forEach(el => {
+    el.classList.remove("selected");
+  });
+
+  // Volver al inicio
+  currentSlide = 0;
+  showSlide(currentSlide);
+}
+ // pantalla completa 
+ function activarPantallaCompleta() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+</script>
+</main>
+
+</body>
+</html>
+</body>
+</html>

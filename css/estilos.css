@@ -1,0 +1,35 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #1261b0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.escena {
+  display: none;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.escena.activa {
+  display: block;
+}
+
+button {
+  padding: 8px 14px;
+  margin: 5px;
+}
+
+img {
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+#feedback {
+  font-style: italic;
+}
+
